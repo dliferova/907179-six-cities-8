@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Favorites(): JSX.Element {
+function FavoritesScreen(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -231,4 +231,4 @@ function Favorites(): JSX.Element {
   );
 }
 
-export default Favorites;
+export default FavoritesScreen;

@@ -1,5 +1,5 @@
 import React from 'react';
-import CardItem from '../card/card';
+import CardItem from '../card-item/card-item';
 import {MainPageProps} from './main-types';
 
 function MainPage({placesCount}: MainPageProps): JSX.Element {

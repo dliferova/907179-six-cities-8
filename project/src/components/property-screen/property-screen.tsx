@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Property(): JSX.Element {
+function PropertyScreen(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -339,4 +339,4 @@ function Property(): JSX.Element {
   );
 }
 
-export default Property;
+export default PropertyScreen;
