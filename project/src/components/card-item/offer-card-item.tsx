@@ -3,9 +3,11 @@ import {Offer} from '../../types/offer';
 
 type CardItemProps = {
   offer: Offer;
+  onMouseEnter: () => void,
+  onMouseLeave: () => void
 }
 
-function CardItem(props: CardItemProps): JSX.Element {
+function OfferCardItem(props: CardItemProps): JSX.Element {
   const offer = props.offer;
   const {previewImage, title, isPremium, type, price} = offer;
 
@@ -20,7 +22,7 @@ function CardItem(props: CardItemProps): JSX.Element {
   };
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={() => props.onMouseEnter()} onMouseLeave={() => props.onMouseLeave()}>
       {renderPremiumTag()}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
@@ -55,4 +57,4 @@ function CardItem(props: CardItemProps): JSX.Element {
   );
 }
 
-export default CardItem;
+export default OfferCardItem;
