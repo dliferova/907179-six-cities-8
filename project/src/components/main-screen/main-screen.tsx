@@ -1,8 +1,11 @@
 import React from 'react';
 import CardItem from '../card-item/card-item';
-import {MainPageProps} from './main-types';
+import {MainScreenProps} from './main-types';
 
-function MainPage({placesCount}: MainPageProps): JSX.Element {
+function MainScreen(props: MainScreenProps): JSX.Element {
+  const placesCount = props.placesCount;
+  const offers = props.offers;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -92,11 +95,7 @@ function MainPage({placesCount}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {CardItem()}
-                {CardItem()}
-                {CardItem()}
-                {CardItem()}
-                {CardItem()}
+                {offers.map((offer) => <CardItem offer={offer} key={offer.id}/>)}
               </div>
             </section>
             <div className="cities__right-section">
@@ -109,4 +108,4 @@ function MainPage({placesCount}: MainPageProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export default MainScreen;

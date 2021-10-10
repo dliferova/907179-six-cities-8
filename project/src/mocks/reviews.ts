@@ -1,4 +1,4 @@
-import {Reviews} from '../types/offer-types';
+import {Reviews} from '../types/offer';
 
 export const reviews: Reviews = [{
   // TODO guid

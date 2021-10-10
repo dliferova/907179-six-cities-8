@@ -10,12 +10,15 @@ import NotFoundScreen from '../not-fount-screen/not-found-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 
-function App({placesCount, offers, reviews}: AppScreenProps): JSX.Element {
+function App(props: AppScreenProps): JSX.Element {
+  const placesCount = props.placesCount;
+  const offers = props.offers;
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen placesCount = {placesCount}/>
+          <MainScreen placesCount = {placesCount} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <LoginScreen />

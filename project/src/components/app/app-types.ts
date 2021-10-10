@@ -1,5 +1,5 @@
-import {Offers} from '../../types/offer-types';
-import {Reviews} from '../../types/offer-types';
+import {Offers} from '../../types/offer';
+import {Reviews} from '../../types/offer';
 
 export type AppScreenProps = {
   placesCount: number;

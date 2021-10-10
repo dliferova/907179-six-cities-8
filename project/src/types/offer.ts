@@ -1,6 +1,7 @@
-export type OfferTypes = {
+export type Offer = {
   id: number,
   imageUrls: string[],
+  previewImage: string,
   title: string,
   description: string,
   isPremium: boolean,
@@ -14,7 +15,7 @@ export type OfferTypes = {
   isFavorite: boolean,
 };
 
-export type Offers = OfferTypes[];
+export type Offers = Offer[];
 
 export type HostInfo = {
   id: number,
