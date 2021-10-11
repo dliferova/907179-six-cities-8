@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import FavoritesScreen from './components/favorites-screen/favorites-screen';
 import {offersMock} from './mocks/offers-mock';
 import {reviews} from './mocks/reviews';
 
@@ -14,6 +13,5 @@ ReactDOM.render(
       offers={offersMock}
       reviews={reviews}
     />
-    <FavoritesScreen offers={offersMock}/>
   </React.StrictMode>,
   document.getElementById('root'));

@@ -23,16 +23,15 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <LoginScreen />
         </Route>
+        <Route exact path={`${AppRoute.Room}:id`}>
+          <PropertyScreen />
+        </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
           render={() => <FavoritesScreen offers={offers}/>}
           authorizationStatus={AuthorizationStatus.Auth}
-        >
-        </PrivateRoute>
-        <Route exact path={AppRoute.Room}>
-          <PropertyScreen />
-        </Route>
+        />
         <Route>
           <NotFoundScreen/>
         </Route>

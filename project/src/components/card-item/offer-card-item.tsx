@@ -1,5 +1,7 @@
 import React from 'react';
 import {Offer} from '../../types/offer';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 type CardItemProps = {
   offer: Offer;
@@ -9,7 +11,7 @@ type CardItemProps = {
 
 function OfferCardItem(props: CardItemProps): JSX.Element {
   const offer = props.offer;
-  const {previewImage, title, isPremium, type, price} = offer;
+  const {id, previewImage, title, isPremium, type, price} = offer;
 
   const renderPremiumTag = () => {
     if (isPremium) {
@@ -25,9 +27,9 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
     <article className="cities__place-card place-card" onMouseEnter={() => props.onMouseEnter()} onMouseLeave={() => props.onMouseLeave()}>
       {renderPremiumTag()}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to={`${AppRoute.Room}:${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -49,7 +51,9 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={`${AppRoute.Room}:${id}`}>
+            {title}
+          </Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
