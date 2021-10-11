@@ -23,7 +23,7 @@ function App(props: AppScreenProps): JSX.Element {
         <Route exact path={AppRoute.SignIn}>
           <LoginScreen />
         </Route>
-        <Route exact path={`${AppRoute.Room}:id`}>
+        <Route exact path={`${AppRoute.Room}/:id`}>
           <PropertyScreen />
         </Route>
         <PrivateRoute

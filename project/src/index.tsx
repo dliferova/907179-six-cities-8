@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {offersMock} from './mocks/offers-mock';
-import {reviews} from './mocks/reviews';
+import {reviewsMock} from './mocks/reviews-mock';
 
 const PLACES_COUNT = 458;
 
@@ -11,7 +11,7 @@ ReactDOM.render(
     <App
       placesCount = {PLACES_COUNT}
       offers={offersMock}
-      reviews={reviews}
+      reviews={reviewsMock}
     />
   </React.StrictMode>,
   document.getElementById('root'));

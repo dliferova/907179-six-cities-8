@@ -1,6 +1,6 @@
 import {Reviews} from '../types/offer';
 
-export const reviews: Reviews = [{
+export const reviewsMock: Reviews = [{
   // TODO guid
   id: 2647,
   reviewMessage: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',

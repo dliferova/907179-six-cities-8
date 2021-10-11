@@ -27,7 +27,7 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
     <article className="cities__place-card place-card" onMouseEnter={() => props.onMouseEnter()} onMouseLeave={() => props.onMouseLeave()}>
       {renderPremiumTag()}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`${AppRoute.Room}:${id}`}>
+        <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -51,7 +51,7 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}:${id}`}>
+          <Link to={`${AppRoute.Room}/${id}`}>
             {title}
           </Link>
         </h2>
