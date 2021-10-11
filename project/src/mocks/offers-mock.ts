@@ -1,9 +1,9 @@
 import {Offers, OfferType} from '../types/offer';
+import {nanoid} from 'nanoid';
 
 export const offersMock: Offers = [
   {
-    // TODO guid
-    id: 3130,
+    id: nanoid(),
     imageUrls: ['img/apartment-01', 'img/apartment-02'],
     previewImage: '/img/apartment-01.jpg',
     title: 'Cosy flat Paris Center',
@@ -18,8 +18,7 @@ export const offersMock: Offers = [
     price: 120,
     amenities: ['Washing machine', ' Coffee machine', 'Dishwasher'],
     host: {
-      // TODO guid
-      id: 320,
+      id: nanoid(),
       avatarUrl: 'img/avatar-angelina.jpg',
       name: ' Angelina',
       isPro: false,
@@ -29,7 +28,7 @@ export const offersMock: Offers = [
     },
   },
   {
-    id: 9160,
+    id: nanoid(),
     imageUrls: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
     previewImage: 'img/apartment-02.jpg',
     title: 'Studio spa center',
@@ -43,8 +42,7 @@ export const offersMock: Offers = [
     price: 160,
     amenities: ['Washing machine', 'Coffee machine', 'Dishwasher', 'Wifi', 'Hair dryer', 'Shared backyard'],
     host: {
-      // TODO guid
-      id: 622,
+      id: nanoid(),
       avatarUrl: 'img/avatar-angelina.jpg',
       name: ' Olga',
       isPro: true,
@@ -55,7 +53,7 @@ export const offersMock: Offers = [
     },
   },
   {
-    id: 7613,
+    id: nanoid(),
     imageUrls: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
     previewImage: 'img/apartment-03.jpg',
     title: 'Romantic Getaway for 2 with natural wellness',
@@ -68,8 +66,7 @@ export const offersMock: Offers = [
     price: 127,
     amenities: ['Kitchen', 'Washer', 'Dishwasher', 'Wifi', 'Hair dryer', 'Fire pit', 'TV', 'Outdoor shower'],
     host: {
-      // TODO guid
-      id: 859,
+      id: nanoid(),
       avatarUrl: 'img/avatar-max.jpg',
       name: 'Boris',
       isPro: true,
@@ -80,7 +77,7 @@ export const offersMock: Offers = [
     },
   },
   {
-    id: 6306,
+    id: nanoid(),
     imageUrls: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
     previewImage: 'img/apartment-02.jpg',
     title: 'Signature Private Room in the Picturesque Canal District',
@@ -93,8 +90,7 @@ export const offersMock: Offers = [
     price: 55,
     amenities: ['Kitchen', 'Wifi', 'Hair dryer'],
     host: {
-      // TODO guid
-      id: 632,
+      id: nanoid(),
       avatarUrl: 'img/avatar-max.jpg',
       name: 'Petr',
       isPro: false,

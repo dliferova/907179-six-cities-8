@@ -1,5 +1,5 @@
 export type Offer = {
-  id: number,
+  id: string,
   imageUrls: string[],
   previewImage: string,
   title: string,
@@ -21,7 +21,7 @@ export type Offer = {
 export type Offers = Offer[];
 
 export type HostInfo = {
-  id: number,
+  id: string,
   avatarUrl: string,
   name: string,
   isPro: boolean

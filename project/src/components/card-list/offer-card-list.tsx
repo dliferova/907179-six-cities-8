@@ -5,7 +5,7 @@ import {CardListProps} from './card-list-type';
 function OfferCardList(props: CardListProps): JSX.Element {
   const placesCount = props.placesCount;
   const offers = props.offers;
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   return (
     <div className="cities">
@@ -13,7 +13,7 @@ function OfferCardList(props: CardListProps): JSX.Element {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{placesCount} places to stay in Amsterdam</b>
-          Хаверим карточку {activeCardId}
+             Хаверим карточку {activeCardId}
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by</span>
             <span className="places__sorting-type" tabIndex={0}>
