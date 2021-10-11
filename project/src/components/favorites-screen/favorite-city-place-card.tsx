@@ -61,7 +61,7 @@ function FavoriteCityPlaceCard(props: FavoriteCardItemProps): JSX.Element {
             </h2>
             <p className="place-card__type">{type}</p>
           </div>
-        </article>;
+        </article>
       </div>
     </li>
   );

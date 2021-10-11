@@ -57,7 +57,9 @@ function FavoritesScreen(props: FavoriteScreenProps): JSX.Element {
               listing
             </h1>
             <ul className="favorites__list">
-              {offers.map((offer) => offer.isFavorite ? <FavoriteCityPlaceCard offer={offer} key={offer.id}/> : null)}
+              {offers
+                .filter((offer) => offer.isFavorite)
+                .map((offer) => <FavoriteCityPlaceCard offer={offer} key={offer.id}/>)}
             </ul>
           </section>
         </div>
