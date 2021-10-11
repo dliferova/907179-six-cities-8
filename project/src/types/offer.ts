@@ -4,7 +4,6 @@ export type Offer = {
   previewImage: string,
   title: string,
   description: string,
-  isPremium: boolean,
   type: OfferType,
   rating: number,
   bedrooms: number,
@@ -12,7 +11,11 @@ export type Offer = {
   price: number,
   amenities: string[],
   host: HostInfo,
+  isPremium: boolean,
   isFavorite: boolean,
+  city: {
+    name: string
+  }
 };
 
 export type Offers = Offer[];

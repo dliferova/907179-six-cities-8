@@ -1,6 +1,6 @@
 import {Offers, OfferType} from '../types/offer';
 
-export const offers: Offers = [
+export const offersMock: Offers = [
   {
     // TODO guid
     id: 3130,
@@ -10,7 +10,7 @@ export const offers: Offers = [
     description: 'Amazing Location by Hyde Park! Comfortable Single Studio Apartment on 2nd Floor with Private EN suite shower room. ' +
       'Newly Refurbished Sleeps only 1. Fresh Linen/Towels. Equipped Kitchenette. Communal Laundry Facilities. Excellent Location. Great Transport links! Ideal for solo adventurers or business travellers.',
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     type: OfferType.Apartment,
     rating: 4.8,
     bedrooms: 3,
@@ -23,6 +23,9 @@ export const offers: Offers = [
       avatarUrl: 'img/avatar-angelina.jpg',
       name: ' Angelina',
       isPro: false,
+    },
+    city: {
+      name: 'Prague',
     },
   },
   {
@@ -47,6 +50,9 @@ export const offers: Offers = [
       isPro: true,
     },
     isFavorite: false,
+    city: {
+      name: 'Amsterdam',
+    },
   },
   {
     id: 7613,
@@ -69,6 +75,9 @@ export const offers: Offers = [
       isPro: true,
     },
     isFavorite: false,
+    city: {
+      name: 'Amsterdam',
+    },
   },
   {
     id: 6306,
@@ -90,6 +99,9 @@ export const offers: Offers = [
       name: 'Petr',
       isPro: false,
     },
-    isFavorite: false,
+    isFavorite: true,
+    city: {
+      name: 'Amsterdam',
+    },
   },
 ];
