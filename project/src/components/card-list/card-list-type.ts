@@ -1,6 +1,6 @@
 import {Offers} from '../../types/offer';
 
-export type MainScreenProps = {
+export type CardListProps = {
   placesCount: number;
   offers: Offers;
 }

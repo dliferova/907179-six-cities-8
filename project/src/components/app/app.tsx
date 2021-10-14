@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
-import {AppProps} from './app-types';
+import {AppScreenProps} from './app-types';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import LoginScreen from '../login-screen/login-screen';
@@ -10,26 +10,28 @@ import NotFoundScreen from '../not-fount-screen/not-found-screen';
 import PropertyScreen from '../property-screen/property-screen';
 import PrivateRoute from '../private-route/private-route';
 
-function App({placesCount}: AppProps): JSX.Element {
+function App(props: AppScreenProps): JSX.Element {
+  const placesCount = props.placesCount;
+  const offers = props.offers;
+
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.Main}>
-          <MainScreen placesCount = {placesCount}></MainScreen>
+          <MainScreen placesCount = {placesCount} offers={offers}/>
         </Route>
         <Route exact path={AppRoute.SignIn}>
           <LoginScreen />
         </Route>
+        <Route exact path={`${AppRoute.Room}/:id`}>
+          <PropertyScreen />
+        </Route>
         <PrivateRoute
           exact
           path={AppRoute.Favorites}
-          render={() => <FavoritesScreen />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
-        >
-        </PrivateRoute>
-        <Route exact path={AppRoute.Room}>
-          <PropertyScreen />
-        </Route>
+          render={() => <FavoritesScreen offers={offers}/>}
+          authorizationStatus={AuthorizationStatus.Auth}
+        />
         <Route>
           <NotFoundScreen/>
         </Route>
