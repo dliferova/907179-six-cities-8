@@ -14,11 +14,19 @@ export type Offer = {
   isPremium: boolean,
   isFavorite: boolean,
   city: {
-    name: string
-  }
+    location: Location,
+    name: string,
+  },
+  location: Location,
 };
 
 export type Offers = Offer[];
+
+export type Location = {
+  latitude: number,
+  longitude: number,
+  zoom: number
+}
 
 export type HostInfo = {
   id: string,
