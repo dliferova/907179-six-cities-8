@@ -13,9 +13,13 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
   const city = offers[0].city;
 
-  const onListItemHover = (offerId: string | null) => {
+  const onOfferMouseEnter = (offerId: string) => {
     const currentPoint = offers.find((offer) => offer.id === offerId);
     setSelectedOffer(currentPoint);
+  };
+
+  const onOfferMouseLeave = () => {
+    setSelectedOffer(undefined);
   };
 
   return (
@@ -61,7 +65,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OfferCardList placesCount={placesCount} offers={offers} onListItemHover={onListItemHover} />
+            <OfferCardList placesCount={placesCount} offers={offers} onOfferMouseEnter={onOfferMouseEnter} onOfferMouseLeave={onOfferMouseLeave} />
             <div className="cities__right-section">
               <Map cityLocation={city.location} points={offers.map((offer) => ({title: offer.title, location: offer.location}))} selectedPoint={selectedOffer} />
             </div>

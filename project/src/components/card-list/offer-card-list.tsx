@@ -5,26 +5,26 @@ import {Offer, Offers} from '../../types/offer';
 type CardListProps = {
   placesCount: number;
   offers: Offers;
-  onListItemHover: (offerId: string | null) => void;
+  onOfferMouseEnter: (offerId: string) => void;
+  onOfferMouseLeave: () => void;
 }
 
 function OfferCardList(props: CardListProps): JSX.Element {
   const placesCount = props.placesCount;
   const offers = props.offers;
-  const onListItemHover = props.onListItemHover;
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const onOfferMouseEnter = (offer: Offer) => {
-    onListItemHover(offer.id);
+    props.onOfferMouseEnter(offer.id);
     setActiveCardId(offer.id);
   };
 
   const onOfferMouseLeave = () => {
-    onListItemHover(null);
+    props.onOfferMouseLeave();
     setActiveCardId(null);
   };
 
-  //TODO убрать временный текст 33 строка, используется для устранения ошибки "не используемая переменная activeCardId"
+  //TODO убрать временный текст 33 строка, используется для устранения ошибки "неиспользуемая переменная activeCardId"
 
   return (
     <section className="cities__places places">
