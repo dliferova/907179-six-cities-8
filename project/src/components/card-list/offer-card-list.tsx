@@ -24,6 +24,8 @@ function OfferCardList(props: CardListProps): JSX.Element {
     setActiveCardId(null);
   };
 
+  //TODO убрать временный текст 33 строка, используется для устранения ошибки "не используемая переменная activeCardId"
+
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>

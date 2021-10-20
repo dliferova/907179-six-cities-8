@@ -1,5 +1,5 @@
 import {useEffect, useRef} from 'react';
-import useMap from '../hooks/useMap';
+import useMap from '../../hooks/useMap';
 import {Icon, Marker} from 'leaflet';
 import {Location} from '../../types/offer';
 import 'leaflet/dist/leaflet.css';

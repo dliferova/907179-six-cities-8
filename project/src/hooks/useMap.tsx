@@ -4,7 +4,7 @@ import {Location} from '../types/offer';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  cityLocation: Location
+  cityLocation: Location,
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
@@ -13,17 +13,17 @@ function useMap(
       const instance = new Map(mapRef.current, {
         center: {
           lat: cityLocation.latitude,
-          lng: cityLocation.longitude
+          lng: cityLocation.longitude,
         },
-        zoom: cityLocation.zoom
+        zoom: cityLocation.zoom,
       });
 
       const layer = new TileLayer(
         'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
         {
           attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        }
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
       );
 
       instance.addLayer(layer);
