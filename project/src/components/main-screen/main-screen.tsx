@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import {MainScreenProps} from './main-types';
 import OfferCardList from '../card-list/offer-card-list';
 import Header from '../header/header';
 import Map  from '../map/map';
-import {Offer} from '../../types/offer';
+import {Offer, Offers} from '../../types/offer';
 
-function MainScreen(props: MainScreenProps): JSX.Element {
-  const placesCount = props.placesCount;
-  const offers = props.offers;
+type MainScreenProps = {
+  placesCount: number;
+  offers: Offers;
+}
+
+function MainScreen({placesCount, offers}: MainScreenProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
@@ -65,9 +67,20 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <OfferCardList placesCount={placesCount} offers={offers} onOfferMouseEnter={onOfferMouseEnter} onOfferMouseLeave={onOfferMouseLeave} />
+            <OfferCardList
+              placesCount={placesCount}
+              offers={offers}
+              onOfferMouseEnter={onOfferMouseEnter}
+              onOfferMouseLeave={onOfferMouseLeave}
+            />
             <div className="cities__right-section">
-              <Map cityLocation={city.location} points={offers.map((offer) => ({title: offer.title, location: offer.location}))} selectedPoint={selectedOffer} />
+              <section className="cities__map map">
+                <Map
+                  cityLocation={city.location}
+                  points={offers.map((offer) => ({title: offer.title, location: offer.location}))}
+                  selectedPoint={selectedOffer}
+                />
+              </section>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import OfferCardItem from '../card-item/offer-card-item';
 import {Offer, Offers} from '../../types/offer';
+import {OfferCardType} from '../../const';
 
 type CardListProps = {
   placesCount: number;
@@ -47,7 +48,14 @@ function OfferCardList(props: CardListProps): JSX.Element {
         </ul>
       </form>
       <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer) => <OfferCardItem offer={offer} key={offer.id} onMouseEnter={() => onOfferMouseEnter(offer)} onMouseLeave={() => onOfferMouseLeave()}/>)}
+        {offers.map((offer) => (
+          <OfferCardItem
+            key={offer.id}
+            type={OfferCardType.Cities}
+            offer={offer}
+            onMouseEnter={() => onOfferMouseEnter(offer)}
+            onMouseLeave={() => onOfferMouseLeave()}
+          />))}
       </div>
     </section>
   );

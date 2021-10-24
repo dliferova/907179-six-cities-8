@@ -2,12 +2,36 @@ import React from 'react';
 import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import {OfferCardType} from '../../const';
 
 type CardItemProps = {
+  type: OfferCardType;
   offer: Offer;
   onMouseEnter: () => void,
   onMouseLeave: () => void
 }
+
+const articleClass = (param: OfferCardType): string => {
+  switch (param) {
+    case OfferCardType.Favorites:
+      return 'favorites__card place-card';
+    case OfferCardType.NearPlaces:
+      return 'near-places__card place-card';
+    default:
+      return 'cities__place-card place-card';
+  }
+};
+
+const imageWrapper = (param: OfferCardType): string => {
+  switch (param) {
+    case OfferCardType.Favorites:
+      return 'favorites__image-wrapper place-card__image-wrapper';
+    case OfferCardType.NearPlaces:
+      return 'near-places__image-wrapper place-card__image-wrapper';
+    default:
+      return 'cities__image-wrapper place-card__image-wrapper';
+  }
+};
 
 function OfferCardItem(props: CardItemProps): JSX.Element {
   const offer = props.offer;
@@ -24,9 +48,12 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
   };
 
   return (
-    <article className="cities__place-card place-card" onMouseEnter={() => props.onMouseEnter()} onMouseLeave={() => props.onMouseLeave()}>
+    <article className={articleClass(props.type)}
+      onMouseEnter={() => props.onMouseEnter()}
+      onMouseLeave={() => props.onMouseLeave()}
+    >
       {renderPremiumTag()}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={imageWrapper(props.type)}>
         <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>

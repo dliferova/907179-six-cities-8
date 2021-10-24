@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, ChangeEvent} from 'react';
 
-function AddReview(): JSX.Element {
+function ReviewForm(): JSX.Element {
   const [commentMessage, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
@@ -9,7 +9,7 @@ function AddReview(): JSX.Element {
 
   return (
     <form className="reviews__form form" action="#" method="post">
-      <label className="reviews__label form__label" htmlFor="review">Your review{rating}</label>
+      <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input className="form__rating-input visually-hidden"
           name="rating"
@@ -95,4 +95,4 @@ function AddReview(): JSX.Element {
   );
 }
 
-export default AddReview;
+export default ReviewForm;
