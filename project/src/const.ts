@@ -20,3 +20,5 @@ export const enum OfferCardType {
   NearPlaces,
   Favorites,
 }
+
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
