@@ -1,20 +1,27 @@
 import {ActionType, Actions} from '../types/action';
 import {State} from '../types/state';
-import {offersMock} from '../mocks/offers-mock';
+import {cities} from '../const';
 
-const ACTIVE_CITY  = offersMock[0].city.name;
+const INITIAL_CITY = cities.Paris.name;
 
 const initialState: State = {
-  city: ACTIVE_CITY,
-  offers: offersMock.filter((offer) => offer.city.name === ACTIVE_CITY),
+  currentCity: INITIAL_CITY,
+  cityOffers: [],
+  offers: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
-    case ActionType.SetCity:
-      return {...state, city: action.payload};
-    case ActionType.SetOffers:
-      return {...state, offers: action.payload};
+    case ActionType.cityChanged:
+      return {...state,
+        currentCity: action.payload,
+        cityOffers: state.offers.filter((offer) => offer.city.name === action.payload),
+      };
+    case ActionType.offersLoaded:
+      return {...state,
+        offers: action.payload,
+        cityOffers: action.payload.filter((offer) => offer.city.name === state.currentCity),
+      };
     default:
       return state;
   }

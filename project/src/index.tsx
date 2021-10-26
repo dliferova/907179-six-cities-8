@@ -6,11 +6,6 @@ import {createStore} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {reducer} from './store/reducer';
 
-import {offersMock} from './mocks/offers-mock';
-import {reviewsMock} from './mocks/reviews-mock';
-
-const PLACES_COUNT = 458;
-
 const store = createStore(
   reducer,
   composeWithDevTools(),
@@ -19,11 +14,7 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        placesCount = {PLACES_COUNT}
-        offers={offersMock}
-        reviews={reviewsMock}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

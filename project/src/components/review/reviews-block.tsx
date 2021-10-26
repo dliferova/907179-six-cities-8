@@ -1,16 +1,12 @@
 import React from 'react';
 import ReviewForm from './review-form';
 import ReviewList from './review-list';
-import {Reviews} from '../../types/offer';
+import {reviewsMock} from '../../mocks/reviews-mock';
 
-type ReviewsBlockProps = {
-  reviews: Reviews,
-}
-
-function ReviewsBlock({reviews}: ReviewsBlockProps): JSX.Element {
+function ReviewsBlock(): JSX.Element {
   return (
     <section className="property__reviews reviews">
-      <ReviewList reviews={reviews}/>
+      <ReviewList reviews={reviewsMock}/>
       <ReviewForm/>
     </section>
   );

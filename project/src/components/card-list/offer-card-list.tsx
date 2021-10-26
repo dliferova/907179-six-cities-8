@@ -4,15 +4,15 @@ import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
 
 type CardListProps = {
-  placesCount: number;
   offers: Offers;
   onOfferMouseEnter: (offerId: string) => void;
   onOfferMouseLeave: () => void;
+  currentCity: string;
 }
 
 function OfferCardList(props: CardListProps): JSX.Element {
-  const placesCount = props.placesCount;
   const offers = props.offers;
+  const currentCity = props.currentCity;
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const onOfferMouseEnter = (offer: Offer) => {
@@ -30,7 +30,7 @@ function OfferCardList(props: CardListProps): JSX.Element {
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+      <b className="places__found">{offers.length} places to stay in {currentCity}</b>
       Хаверим карточку {activeCardId}
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>

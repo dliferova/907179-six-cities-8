@@ -1,18 +1,37 @@
-import React, {useState} from 'react';
+import React, {Dispatch, useState} from 'react';
 import Header from '../header/header';
-import ReviewsBlock from '../review/reviews-block';
-import {Reviews, Offers, Offer} from '../../types/offer';
+// import ReviewsBlock from '../review/reviews-block';
+import {Offer} from '../../types/offer';
 import NearPlacesList from '../near-places/near-places-list';
 import Map from '../map/map';
+import {State} from '../../types/state';
+import {Actions} from '../../types/action';
+import {cityChanged} from '../../store/actions';
+import {connect, ConnectedProps} from 'react-redux';
+import ReviewsBlock from '../review/reviews-block';
+
+const mapStateToProps = ({cityOffers, currentCity}: State) => ({
+  offers: cityOffers,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onCityChange(city: string) {
+    dispatch(cityChanged(city));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type PropertyScreenProps = {
-  reviews: Reviews,
-  offers: Offers,
 }
+
+type ConnectedComponentProps = PropsFromRedux & PropertyScreenProps;
 
 const MAX_AMOUNT_NEAR_PLACE = 3;
 
-function PropertyScreen({reviews, offers}: PropertyScreenProps): JSX.Element {
+function PropertyScreen({offers}: ConnectedComponentProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
@@ -153,7 +172,7 @@ function PropertyScreen({reviews, offers}: PropertyScreenProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewsBlock reviews={reviews} />
+              <ReviewsBlock />
             </div>
           </div>
           <section className="property__map map">
@@ -176,4 +195,5 @@ function PropertyScreen({reviews, offers}: PropertyScreenProps): JSX.Element {
   );
 }
 
-export default PropertyScreen;
+export {PropertyScreen};
+export default connector(PropertyScreen);

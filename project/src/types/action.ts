@@ -1,18 +1,18 @@
 import {Offers} from './offer';
 
 export enum ActionType {
-  SetCity = 'app/set-city',
-  SetOffers = 'app/set-offers-by-city',
+  cityChanged = 'app/city-changed',
+  offersLoaded = 'app/offers-loaded',
 }
 
-export type SetCityAction = {
-  type: ActionType.SetCity;
+export type CityChanged = {
+  type: ActionType.cityChanged;
   payload: string;
 }
 
-export type SetOffersAction = {
-  type: ActionType.SetOffers;
+export type OffersLoaded = {
+  type: ActionType.offersLoaded;
   payload: Offers;
 }
 
-export type Actions = SetCityAction | SetOffersAction;
+export type Actions = CityChanged | OffersLoaded;
