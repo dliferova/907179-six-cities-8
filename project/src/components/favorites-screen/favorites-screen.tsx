@@ -1,14 +1,26 @@
-import React from 'react';
+import React, {Dispatch} from 'react';
 import '../favorites-screen/favorite-city-place-card';
-import {Offers} from '../../types/offer';
 import FavoriteCityPlaceCard from './favorite-city-place-card';
 import Header from '../header/header';
+import {State} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
+import {Actions} from '../../types/action';
+import {cityChanged} from '../../store/actions';
 
-type FavoriteScreenProps = {
-  offers: Offers;
-}
+const mapStateToProps = ({offers}: State) => ({
+  offers,
+});
 
-function FavoritesScreen(props: FavoriteScreenProps): JSX.Element {
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  onCityChange(city: string) {
+    dispatch(cityChanged(city));
+  },
+});
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+function FavoritesScreen(props: PropsFromRedux): JSX.Element {
   const offers = props.offers;
 
   return (
@@ -44,4 +56,5 @@ function FavoritesScreen(props: FavoriteScreenProps): JSX.Element {
   );
 }
 
-export default FavoritesScreen;
+export {FavoritesScreen};
+export default connector(FavoritesScreen);

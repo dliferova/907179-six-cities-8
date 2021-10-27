@@ -11,7 +11,7 @@ type CardItemProps = {
   onMouseLeave: () => void
 }
 
-const articleClass = (param: OfferCardType): string => {
+const getArticleClass = (param: OfferCardType): string => {
   switch (param) {
     case OfferCardType.Favorites:
       return 'favorites__card place-card';
@@ -22,7 +22,7 @@ const articleClass = (param: OfferCardType): string => {
   }
 };
 
-const imageWrapper = (param: OfferCardType): string => {
+const getImageWrapper = (param: OfferCardType): string => {
   switch (param) {
     case OfferCardType.Favorites:
       return 'favorites__image-wrapper place-card__image-wrapper';
@@ -48,12 +48,12 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
   };
 
   return (
-    <article className={articleClass(props.type)}
+    <article className={getArticleClass(props.type)}
       onMouseEnter={() => props.onMouseEnter()}
       onMouseLeave={() => props.onMouseLeave()}
     >
       {renderPremiumTag()}
-      <div className={imageWrapper(props.type)}>
+      <div className={getImageWrapper(props.type)}>
         <Link to={`${AppRoute.Room}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
