@@ -41,25 +41,20 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type ConnectedComponentProps = PropsFromRedux & CardListProps;
 
-function OfferCardList({
-  currentCity,
-  currentSortType,
-  onOfferMouseEnter,
-  onOfferMouseLeave,
-  offers,
-}: ConnectedComponentProps): JSX.Element {
+function OfferCardList(props: ConnectedComponentProps): JSX.Element {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const sortedOffers = getSortedOffers(currentSortType, offers);
+  const sortedOffers = getSortedOffers(props.currentSortType, props.offers);
 
-  const onOfferMouseEnterF = (offer: Offer) => {
-    onOfferMouseEnter(offer.id);
+  const onOfferMouseEnter = (offer: Offer) => {
+    props.onOfferMouseEnter(offer.id);
     setActiveCardId(offer.id);
   };
 
-  const onOfferMouseLeaveF = () => {
-    onOfferMouseLeave();
+  const onOfferMouseLeave = () => {
+    props.onOfferMouseLeave();
     setActiveCardId(null);
   };
 
@@ -68,8 +63,7 @@ function OfferCardList({
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offers.length} places to stay in {currentCity}</b>
-      Хаверим карточку {activeCardId}
+      <b className="places__found">{props.offers.length} places to stay in {props.currentCity}</b>
       <Sort />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) => (
@@ -77,8 +71,8 @@ function OfferCardList({
             key={offer.id}
             type={OfferCardType.Cities}
             offer={offer}
-            onMouseEnter={() => onOfferMouseEnterF(offer)}
-            onMouseLeave={() => onOfferMouseLeaveF()}
+            onMouseEnter={() => onOfferMouseEnter(offer)}
+            onMouseLeave={() => onOfferMouseLeave()}
           />))}
       </div>
     </section>

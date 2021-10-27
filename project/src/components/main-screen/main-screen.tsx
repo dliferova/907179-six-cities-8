@@ -31,8 +31,6 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const city = Object.values(cities).find((item) =>  item.name === currentCity);
-  // eslint-disable-next-line no-console
-  console.log(city);
 
   const onOfferMouseEnter = (offerId: string) => {
     const currentPoint = offers.find((offer) => offer.id === offerId);
