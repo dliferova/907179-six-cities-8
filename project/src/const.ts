@@ -1,4 +1,3 @@
-
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -72,3 +71,10 @@ export const cities = {
     },
   },
 } as const;
+
+export enum SortType {
+  Popular = 'Popular',
+  PriceIncrease = 'Price: low to high',
+  PriceDecrease = 'Price: high to low',
+  TopRatedFirst = 'Top rated first'
+}

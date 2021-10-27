@@ -4,4 +4,5 @@ export type State = {
   currentCity: string,
   cityOffers: Offers;
   offers: Offers;
+  currentSortType: string;
 };
