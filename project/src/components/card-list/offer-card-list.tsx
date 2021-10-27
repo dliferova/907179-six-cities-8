@@ -2,26 +2,64 @@ import React, {useState} from 'react';
 import OfferCardItem from '../card-item/offer-card-item';
 import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
+import Sort from '../sort/sort';
+import {SortType} from '../../const';
+import {State} from '../../types/state';
+import {connect, ConnectedProps} from 'react-redux';
+
+const getSortedOffers = (currentSortType: string, offers: Offers) => {
+  switch(currentSortType){
+    case SortType.PriceIncrease: {
+      return offers.slice().sort((offerA, offerB) => offerB.price - offerA.price);
+    }
+    case SortType.PriceDecrease: {
+      return offers.slice().sort((offerA, offerB) => offerA.price - offerB.price);
+    }
+    case SortType.TopRatedFirst: {
+      return offers.slice().sort((offerA, offerB) => offerB.rating - offerA.rating);
+    }
+    default: {
+      return offers;
+    }
+  }
+};
+
+const mapStateToProps = ({currentSortType}: State) => ({
+  currentSortType,
+});
+
+const connector = connect(mapStateToProps);
 
 type CardListProps = {
-  offers: Offers;
-  onOfferMouseEnter: (offerId: string) => void;
-  onOfferMouseLeave: () => void;
-  currentCity: string;
+  onOfferMouseEnter: (offerId: string) => void,
+  onOfferMouseLeave: () => void,
+  currentCity: string,
+  offers: Offers,
 }
 
-function OfferCardList(props: CardListProps): JSX.Element {
-  const offers = props.offers;
-  const currentCity = props.currentCity;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type ConnectedComponentProps = PropsFromRedux & CardListProps;
+
+function OfferCardList({
+  currentCity,
+  currentSortType,
+  onOfferMouseEnter,
+  onOfferMouseLeave,
+  offers,
+}: ConnectedComponentProps): JSX.Element {
+
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const onOfferMouseEnter = (offer: Offer) => {
-    props.onOfferMouseEnter(offer.id);
+  const sortedOffers = getSortedOffers(currentSortType, offers);
+
+  const onOfferMouseEnterF = (offer: Offer) => {
+    onOfferMouseEnter(offer.id);
     setActiveCardId(offer.id);
   };
 
-  const onOfferMouseLeave = () => {
-    props.onOfferMouseLeave();
+  const onOfferMouseLeaveF = () => {
+    onOfferMouseLeave();
     setActiveCardId(null);
   };
 
@@ -32,33 +70,20 @@ function OfferCardList(props: CardListProps): JSX.Element {
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{offers.length} places to stay in {currentCity}</b>
       Хаверим карточку {activeCardId}
-      <form className="places__sorting" action="#" method="get">
-        <span className="places__sorting-caption">Sort by</span>
-        <span className="places__sorting-type" tabIndex={0}>
-          Popular
-          <svg className="places__sorting-arrow" width="7" height="4">
-            <use xlinkHref="#icon-arrow-select"/>
-          </svg>
-        </span>
-        <ul className="places__options places__options--custom places__options--opened">
-          <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-          <li className="places__option" tabIndex={0}>Price: low to high</li>
-          <li className="places__option" tabIndex={0}>Price: high to low</li>
-          <li className="places__option" tabIndex={0}>Top rated first</li>
-        </ul>
-      </form>
+      <Sort />
       <div className="cities__places-list places__list tabs__content">
-        {offers.map((offer) => (
+        {sortedOffers.map((offer) => (
           <OfferCardItem
             key={offer.id}
             type={OfferCardType.Cities}
             offer={offer}
-            onMouseEnter={() => onOfferMouseEnter(offer)}
-            onMouseLeave={() => onOfferMouseLeave()}
+            onMouseEnter={() => onOfferMouseEnterF(offer)}
+            onMouseLeave={() => onOfferMouseLeaveF()}
           />))}
       </div>
     </section>
   );
 }
 
-export default OfferCardList;
+export {OfferCardList};
+export default connector(OfferCardList);

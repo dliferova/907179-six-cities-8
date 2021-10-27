@@ -1,4 +1,5 @@
 import {Offers} from './offer';
+import {SortType} from '../const';
 
 export enum ActionType {
   cityChanged = 'app/city-changed',
@@ -19,7 +20,7 @@ export type OffersLoaded = {
 export type SortTypeChanged = {
   type: ActionType.sortTypeChanged;
   payload: {
-    currentSortType: string,
+    currentSortType: SortType,
   },
 }
 
