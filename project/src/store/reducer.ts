@@ -1,6 +1,6 @@
-import {ActionType, Actions} from '../types/action';
+import {Actions, ActionType} from '../types/action';
 import {State} from '../types/state';
-import {cities} from '../const';
+import {cities, SortType} from '../const';
 
 const INITIAL_CITY = cities.Paris.name;
 
@@ -8,6 +8,7 @@ const initialState: State = {
   currentCity: INITIAL_CITY,
   cityOffers: [],
   offers: [],
+  currentSortType: SortType.Popular,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -21,6 +22,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return {...state,
         offers: action.payload,
         cityOffers: action.payload.filter((offer) => offer.city.name === state.currentCity),
+      };
+    case ActionType.sortTypeChanged:
+      return{...state,
+        currentSortType: action.payload.currentSortType,
       };
     default:
       return state;

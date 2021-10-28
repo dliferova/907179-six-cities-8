@@ -1,8 +1,10 @@
 import {Offers} from './offer';
+import {SortType} from '../const';
 
 export enum ActionType {
   cityChanged = 'app/city-changed',
   offersLoaded = 'app/offers-loaded',
+  sortTypeChanged = 'sort/sort-type-changed'
 }
 
 export type CityChanged = {
@@ -15,4 +17,11 @@ export type OffersLoaded = {
   payload: Offers;
 }
 
-export type Actions = CityChanged | OffersLoaded;
+export type SortTypeChanged = {
+  type: ActionType.sortTypeChanged;
+  payload: {
+    currentSortType: SortType,
+  },
+}
+
+export type Actions = CityChanged | OffersLoaded | SortTypeChanged;
