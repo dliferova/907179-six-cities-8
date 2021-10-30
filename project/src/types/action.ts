@@ -1,20 +1,30 @@
 import {Offers} from './offer';
 import {SortType} from '../const';
+import {AxiosInstance} from 'axios';
+import {State} from './state';
+import {
+  ThunkAction,
+  ThunkDispatch
+} from 'redux-thunk';
 
 export enum ActionType {
   cityChanged = 'app/city-changed',
-  offersLoaded = 'app/offers-loaded',
+  offersLoaded = 'data/offers-loaded',
   sortTypeChanged = 'sort/sort-type-changed'
 }
 
 export type CityChanged = {
   type: ActionType.cityChanged;
-  payload: string;
+  payload: {
+    activeCity: string,
+  };
 }
 
 export type OffersLoaded = {
   type: ActionType.offersLoaded;
-  payload: Offers;
+  payload: {
+    offers: Offers
+  },
 }
 
 export type SortTypeChanged = {
@@ -25,3 +35,5 @@ export type SortTypeChanged = {
 }
 
 export type Actions = CityChanged | OffersLoaded | SortTypeChanged;
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
+export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
