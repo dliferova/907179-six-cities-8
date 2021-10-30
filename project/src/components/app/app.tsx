@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {Dispatch} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -8,27 +7,38 @@ import LoginScreen from '../login-screen/login-screen';
 import MainScreen from '../main-screen/main-screen';
 import NotFoundScreen from '../not-fount-screen/not-found-screen';
 import PropertyScreen from '../property-screen/property-screen';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Actions} from '../../types/action';
-import {offersLoaded} from '../../store/actions';
-import {Offers} from '../../types/offer';
-import {offersMock} from '../../mocks/offers-mock';
+// import {Actions} from '../../types/action';
+// import {offersLoaded} from '../../store/actions';
+// import {Offers} from '../../types/offer';
+import {State} from '../../types/state';
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  offersLoaded(offers: Offers) {
-    dispatch(offersLoaded(offers));
-  },
+const mapStateToProps = ({isDataLoaded, offers}: State) => ({
+  isDataLoaded,
+  offers,
 });
 
-const connector = connect(null, mapDispatchToProps);
+// const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+//   offersLoaded(offers: Offers) {
+//     dispatch(offersLoaded(offers));
+//   },
+// });
+
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>
+
 type ConnectedComponentProps = PropsFromRedux;
 
-function App(props: ConnectedComponentProps): JSX.Element {
-  useEffect(() => {
-    props.offersLoaded(offersMock);
-  });
+function App({isDataLoaded}: ConnectedComponentProps): JSX.Element {
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
