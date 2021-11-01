@@ -1,6 +1,6 @@
 import {Actions, ActionType} from '../types/action';
 import {State} from '../types/state';
-import {cities, SortType} from '../const';
+import {cities, SortType, AuthorizationStatus} from '../const';
 
 const INITIAL_CITY = cities.Paris.name;
 
@@ -10,6 +10,7 @@ const initialState: State = {
   isDataLoaded: false,
   currentCity: INITIAL_CITY,
   currentSortType: SortType.Popular,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -29,6 +30,13 @@ const reducer = (state: State = initialState, action: Actions): State => {
       return{...state,
         currentSortType: action.payload.currentSortType,
       };
+    case ActionType.requireAuthorization:
+      return{...state,
+        authorizationStatus: action.payload.authStatus,
+      };
+    case ActionType.requireLogout:
+      return {...state,
+        authorizationStatus: AuthorizationStatus.NoAuth};
     default:
       return state;
   }
