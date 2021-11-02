@@ -5,11 +5,12 @@ import {
   OffersLoaded,
   RequireAuthorization,
   RequireLogout,
-  SortTypeChanged
+  SortTypeChanged,
+  RedirectedToRoute
 } from '../types/action';
 
 import {Offers} from '../types/offer';
-import {SortType, AuthorizationStatus} from '../const';
+import {SortType, AuthorizationStatus, AppRoute} from '../const';
 
 export const cityChanged = (activeCity: string): CityChanged  => ({
   type: ActionType.cityChanged,
@@ -48,5 +49,12 @@ export const loginChanged = (login: string): LoginChanged => ({
   type: ActionType.loginChanged,
   payload: {
     login,
+  },
+});
+
+export const redirectedToRouter = (url: AppRoute): RedirectedToRoute => ({
+  type: ActionType.redirectedToRoute,
+  payload: {
+    url,
   },
 });

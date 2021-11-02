@@ -5,6 +5,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import {loginAction, AuthData} from '../../store/api-actions';
 import {loginChanged} from '../../store/actions';
 import {ThunkAppDispatch} from '../../types/action';
+import {useHistory} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
@@ -23,6 +25,8 @@ function AuthScreen(props: PropsFromRedux): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
+  const history = useHistory();
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -31,6 +35,8 @@ function AuthScreen(props: PropsFromRedux): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+
+      history.push(AppRoute.Main);
     }
   };
 

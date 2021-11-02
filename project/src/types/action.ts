@@ -13,7 +13,8 @@ export enum ActionType {
   sortTypeChanged = 'sort/sort-type-changed',
   requireAuthorization = 'user/require-authorization',
   requireLogout = 'user/require-logout',
-  loginChanged = 'user/login-added'
+  loginChanged = 'user/login-added',
+  redirectedToRoute = 'user/redirect',
 }
 
 export type CityChanged = {
@@ -55,6 +56,13 @@ export type LoginChanged = {
   },
 }
 
-export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged;
+export type RedirectedToRoute = {
+  type: ActionType.redirectedToRoute;
+  payload: {
+    url: string,
+  }
+}
+
+export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute;
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

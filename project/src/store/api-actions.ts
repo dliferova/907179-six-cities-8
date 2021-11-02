@@ -1,7 +1,7 @@
 import {ThunkActionResult} from '../types/action';
-import {offersLoaded, requireAuthorization, loginChanged} from './actions';
+import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter} from './actions';
 import {saveToken, Token} from '../services/token';
-import {APIRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {adaptToClient} from '../types/offer';
 
 export type AuthData = {
@@ -31,4 +31,5 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
     const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectedToRouter(AppRoute.Main));
   };
