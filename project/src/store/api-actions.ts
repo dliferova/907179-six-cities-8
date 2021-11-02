@@ -1,5 +1,5 @@
 import {ThunkActionResult} from '../types/action';
-import {offersLoaded, requireAuthorization} from './actions';
+import {offersLoaded, requireAuthorization, loginChanged} from './actions';
 import {saveToken, Token} from '../services/token';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {adaptToClient} from '../types/offer';
@@ -19,8 +19,9 @@ export const loadOffers = (): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
-      .then(() => {
+      .then((response): void => {
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        dispatch(loginChanged(response.data.email));
       });
   };
 
@@ -31,5 +32,3 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
   };
-
-

@@ -3,11 +3,13 @@ import Header from '../header/header';
 import {useRef, FormEvent} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {loginAction, AuthData} from '../../store/api-actions';
+import {loginChanged} from '../../store/actions';
 import {ThunkAppDispatch} from '../../types/action';
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onSubmit(authData: AuthData) {
     dispatch(loginAction(authData));
+    dispatch(loginChanged(authData.login));
   },
 });
 

@@ -6,7 +6,7 @@ import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {State} from '../../types/state';
 import {Actions} from '../../types/action';
-import {cityChanged} from '../../store/actions';
+import {cityChanged, logoutRequired} from '../../store/actions';
 import {connect, ConnectedProps} from 'react-redux';
 import {cities} from '../../const';
 
@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   onCityChange(city: string) {
     dispatch(cityChanged(city));
   },
+  onLogout: () => dispatch(logoutRequired()),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

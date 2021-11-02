@@ -8,4 +8,5 @@ export type State = {
   currentCity: string,
   currentSortType: SortType,
   authorizationStatus: AuthorizationStatus,
+  email: string,
 };

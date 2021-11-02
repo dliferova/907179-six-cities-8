@@ -1,9 +1,11 @@
-import {ActionType,
+import {
+  ActionType,
   CityChanged,
+  LoginChanged,
   OffersLoaded,
-  SortTypeChanged,
   RequireAuthorization,
-  RequireLogout
+  RequireLogout,
+  SortTypeChanged
 } from '../types/action';
 
 import {Offers} from '../types/offer';
@@ -40,4 +42,11 @@ export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAu
 
 export const logoutRequired = (): RequireLogout => ({
   type: ActionType.requireLogout,
+});
+
+export const loginChanged = (login: string): LoginChanged => ({
+  type: ActionType.loginChanged,
+  payload: {
+    login,
+  },
 });

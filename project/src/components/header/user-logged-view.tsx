@@ -3,6 +3,11 @@ import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import {logoutRequired} from '../../store/actions';
 import {AppRoute} from '../../const';
+import {State} from '../../types/state';
+
+const mapStateToProps = ({email}: State) => ({
+  email,
+});
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLogoutClicked() {
@@ -10,19 +15,17 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   },
 });
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-//TODO заменить на email 23
-
-function UserLoggedViewBar({onLogoutClicked}: PropsFromRedux): JSX.Element {
+function UserLoggedViewBar({onLogoutClicked, email}: PropsFromRedux): JSX.Element {
   return (
     <>
       <li className="header__nav-item user">
         <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
           <div className="header__avatar-wrapper user__avatar-wrapper">
           </div>
-          <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+          <span className="header__user-name user__name">{email}</span>
         </Link>
       </li>
       <li className="header__nav-item">
