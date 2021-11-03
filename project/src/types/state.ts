@@ -1,10 +1,12 @@
 import {Offers} from './offer';
-import {SortType} from '../const';
+import {SortType, AuthorizationStatus} from '../const';
 
 export type State = {
   cityOffers: Offers,
   offers: Offers,
   isDataLoaded: boolean,
   currentCity: string,
-  currentSortType: SortType;
+  currentSortType: SortType,
+  authorizationStatus: AuthorizationStatus,
+  email: string,
 };

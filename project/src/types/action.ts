@@ -1,5 +1,5 @@
 import {Offers} from './offer';
-import {SortType} from '../const';
+import {SortType, AuthorizationStatus} from '../const';
 import {AxiosInstance} from 'axios';
 import {State} from './state';
 import {
@@ -10,7 +10,11 @@ import {
 export enum ActionType {
   cityChanged = 'app/city-changed',
   offersLoaded = 'data/offers-loaded',
-  sortTypeChanged = 'sort/sort-type-changed'
+  sortTypeChanged = 'sort/sort-type-changed',
+  requireAuthorization = 'user/require-authorization',
+  requireLogout = 'user/require-logout',
+  loginChanged = 'user/login-added',
+  redirectedToRoute = 'user/redirect',
 }
 
 export type CityChanged = {
@@ -34,6 +38,31 @@ export type SortTypeChanged = {
   },
 }
 
-export type Actions = CityChanged | OffersLoaded | SortTypeChanged;
+export type RequireAuthorization = {
+  type: ActionType.requireAuthorization;
+  payload: {
+    authStatus: AuthorizationStatus,
+  },
+}
+
+export type RequireLogout = {
+  type: ActionType.requireLogout;
+}
+
+export type LoginChanged = {
+  type: ActionType.loginChanged;
+  payload: {
+    login: string,
+  },
+}
+
+export type RedirectedToRoute = {
+  type: ActionType.redirectedToRoute;
+  payload: {
+    url: string,
+  }
+}
+
+export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute;
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
