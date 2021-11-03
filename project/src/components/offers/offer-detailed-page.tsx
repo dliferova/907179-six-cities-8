@@ -31,7 +31,7 @@ type ConnectedComponentProps = PropsFromRedux & PropertyScreenProps;
 
 const MAX_AMOUNT_NEAR_PLACE = 3;
 
-function PropertyScreen({offers}: ConnectedComponentProps): JSX.Element {
+function OfferDetailedPage({offers}: ConnectedComponentProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
@@ -195,5 +195,5 @@ function PropertyScreen({offers}: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {PropertyScreen};
-export default connector(PropertyScreen);
+export {OfferDetailedPage};
+export default connector(OfferDetailedPage);

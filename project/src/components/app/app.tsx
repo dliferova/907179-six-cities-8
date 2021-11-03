@@ -6,7 +6,7 @@ import AuthScreen from '../auth-screen/auth-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainScreen from '../main-screen/main-screen';
 import NotFoundScreen from '../not-fount-screen/not-found-screen';
-import PropertyScreen from '../property-screen/property-screen';
+import PropertyScreen from '../offers/offer-detailed-page';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import {State} from '../../types/state';
