@@ -1,4 +1,4 @@
-import {Offers} from './offer';
+import {Offers, Offer} from './offer';
 import {SortType, AuthorizationStatus} from '../const';
 import {AxiosInstance} from 'axios';
 import {State} from './state';
@@ -10,6 +10,7 @@ import {
 export enum ActionType {
   cityChanged = 'app/city-changed',
   offersLoaded = 'data/offers-loaded',
+  offerDetailedLoaded = 'data/detailed-offer-loaded',
   sortTypeChanged = 'sort/sort-type-changed',
   requireAuthorization = 'user/require-authorization',
   requireLogout = 'user/require-logout',
@@ -63,6 +64,13 @@ export type RedirectedToRoute = {
   }
 }
 
-export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute;
+export type OfferDetailedLoaded = {
+  type: ActionType.offerDetailedLoaded;
+  payload: {
+    offer: Offer,
+  }
+}
+
+export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute| OfferDetailedLoaded;
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

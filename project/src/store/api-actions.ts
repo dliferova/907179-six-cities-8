@@ -1,5 +1,5 @@
 import {ThunkActionResult} from '../types/action';
-import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter} from './actions';
+import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter, offerDetailedLoaded} from './actions';
 import {saveToken, Token} from '../services/token';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {adaptToClient} from '../types/offer';
@@ -14,6 +14,13 @@ export const loadOffers = (): ThunkActionResult =>
     const {data} = await api.get(APIRoute.Offers);
     const offers = data.map((item: unknown) => adaptToClient(item));
     dispatch(offersLoaded(offers));
+  };
+
+export const loadDetailedOffer = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get((`${APIRoute.DetailedOffer}/${id}`));
+    const adaptedOffer = adaptToClient(data);
+    dispatch(offerDetailedLoaded(adaptedOffer));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

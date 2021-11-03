@@ -30,7 +30,7 @@ type PropertyScreenProps = {
 type ConnectedComponentProps = PropsFromRedux & PropertyScreenProps;
 
 const MAX_AMOUNT_NEAR_PLACE = 3;
-
+//////////
 function OfferDetailedPage({offers}: ConnectedComponentProps): JSX.Element {
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
