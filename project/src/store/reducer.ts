@@ -12,6 +12,7 @@ const initialState: State = {
   currentSortType: SortType.Popular,
   authorizationStatus: AuthorizationStatus.Unknown,
   email: '',
+  detailedOffer: null,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -26,6 +27,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
         offers: action.payload.offers,
         cityOffers: action.payload.offers.filter((offer) => offer.city.name === state.currentCity),
         isDataLoaded: true,
+      };
+    case ActionType.offerDetailedLoaded:
+      return {...state,
+        detailedOffer: action.payload.offer,
       };
     case ActionType.sortTypeChanged:
       return{...state,

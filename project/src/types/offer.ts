@@ -9,7 +9,7 @@ export type Offer = {
   isFavorite: boolean,
   isPremium: boolean,
   rating: number,
-  type: OfferType,
+  room: OfferType,
   bedrooms: number,
   maxAdults: number,
   price: number,
@@ -36,10 +36,10 @@ export type HostInfo = {
 };
 
 export enum OfferType {
-  apartment,
-  room,
-  house,
-  hotel,
+  apartment = 'Apartment',
+  room = 'Private room',
+  house = 'House',
+  hotel = 'Hotel',
 }
 
 export type Review = {
@@ -59,7 +59,37 @@ export type ReviewAuthor = {
   isPro: boolean
 };
 
-export const adaptToClient = (data: any): Offer => ({
+export type OfferFromServer = {
+  'city': {
+    name: string,
+    location: Location,
+  },
+  'preview_image': string;
+  'images': string[];
+  'title': string;
+  'is_favorite': boolean;
+  'is_premium': boolean;
+  'rating': number;
+  'room': OfferType;
+  'bedrooms': number;
+  'max_adults': number;
+  'price': number;
+  'goods': string[];
+  'host': HostInfoFromServer;
+  'description': string;
+  'location': Location;
+  'placeType': string;
+  'id': string;
+}
+
+type HostInfoFromServer = {
+  'id': number;
+  'name': string;
+  'avatar_url': string;
+  'is_pro': boolean;
+}
+
+export const adaptToClient = (data: OfferFromServer): Offer => ({
   city: {
     name: data['city']['name'],
     location: {
@@ -74,7 +104,7 @@ export const adaptToClient = (data: any): Offer => ({
   isFavorite: data['is_favorite'],
   isPremium: data['is_premium'],
   rating: data['rating'],
-  type: data['room'],
+  room: data['room'],
   bedrooms: data['bedrooms'],
   maxAdults: data['max_adults'],
   price: data['price'],

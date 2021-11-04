@@ -1,4 +1,4 @@
-import {Offers} from './offer';
+import {Offer, Offers} from './offer';
 import {SortType, AuthorizationStatus} from '../const';
 
 export type State = {
@@ -9,4 +9,5 @@ export type State = {
   currentSortType: SortType,
   authorizationStatus: AuthorizationStatus,
   email: string,
+  detailedOffer: Offer | null
 };
