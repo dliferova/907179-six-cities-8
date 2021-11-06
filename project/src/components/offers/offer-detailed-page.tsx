@@ -1,13 +1,14 @@
 // import ReviewsBlock from '../review/reviews-block';
-// import NearPlacesList from '../near-places/near-places-list';
-// import Map from '../map/map';
-import React, {useEffect} from 'react';
+import NearPlacesList from '../near-places/near-places-list';
+import Map from '../map/map';
+import React, {useEffect, useState} from 'react';
 import Header from '../header/header';
 import {State} from '../../types/state';
 import {useParams} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
-import {loadDetailedOffer, loadOfferReview} from '../../store/api-actions';
+import {Offer} from '../../types/offer';
+import {loadDetailedOffer, loadOfferReview, loadeNearByPlaces} from '../../store/api-actions';
 import ReviewList from '../review/review-list';
 import ReviewForm from '../review/review-form';
 import {AuthorizationStatus} from '../../const';
@@ -18,18 +19,23 @@ const mapStateToProps = ({
   detailedOffer,
   reviews,
   authorizationStatus,
+  nearByPlaces,
 }: State) => ({
   detailedOffer,
   reviews,
   authorizationStatus,
+  nearByPlaces,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLoadDetailedOffer(offerId: string) {
     dispatch(loadDetailedOffer(offerId));
   },
-  onOfferReviewsLoaded(offerId: string) {
+  onOfferReviewsLoad(offerId: string) {
     dispatch(loadOfferReview(offerId));
+  },
+  onNearByPlacesLoad(offerId: string) {
+    dispatch(loadeNearByPlaces(offerId));
   },
 });
 
@@ -41,31 +47,36 @@ function OfferDetailedPage(
   {
     detailedOffer,
     onLoadDetailedOffer,
-    onOfferReviewsLoaded,
+    onOfferReviewsLoad,
     reviews,
     authorizationStatus,
+    onNearByPlacesLoad,
+    nearByPlaces,
   }: PropsFromRedux): JSX.Element {
 
-  // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   //
   // const city = offers[0].city;
   //
   // const nearestPlaces = offers.slice(0, MAX_AMOUNT_NEAR_PLACE);
   //
-  // const onOfferMouseEnter = (offerId: string) => {
-  //   const currentPoint = offers.find((offer) => offer.id === offerId);
-  //   setSelectedOffer(currentPoint);
-  // };
-  //
-  // const onOfferMouseLeave = () => {
-  //   setSelectedOffer(undefined);
-  // };
+  const onOfferMouseEnter = (offerId: string) => {
+    const currentPoint = nearByPlaces.find((offer) => offer.id === offerId);
+    setSelectedOffer(currentPoint);
+  };
+
+  const onOfferMouseLeave = () => {
+    setSelectedOffer(undefined);
+  };
 
   const { id }  = useParams<{id: string}>();
   useEffect(() => {
     onLoadDetailedOffer(id);
-    onOfferReviewsLoaded(id);
-  }, [id, onLoadDetailedOffer, onOfferReviewsLoaded]);
+    onOfferReviewsLoad(id);
+    onNearByPlacesLoad(id);
+  }, [id, onLoadDetailedOffer, onOfferReviewsLoad, onNearByPlacesLoad]);
   // eslint-disable-next-line no-console
   console.log(detailedOffer);
 
@@ -164,19 +175,22 @@ function OfferDetailedPage(
             </div>
           </div>
           <section className="property__map map">
-            {/*<Map*/}
-            {/*  cityLocation={city.location}*/}
-            {/*  points={nearestPlaces.map((offer) => ({title: offer.title, location: offer.location}))}*/}
-            {/*  selectedPoint={selectedOffer}*/}
-            {/*/>*/}
+            {nearByPlaces && detailedOffer? (
+              <Map
+                cityLocation={detailedOffer.location}
+                points={nearByPlaces.map((offer) => ({title: offer.title, location: offer.location}))}
+                selectedPoint={selectedOffer}
+              />
+            ) : null}
           </section>
         </section>
         <div className="container">
-          {/*<NearPlacesList*/}
-          {/*  offers={nearestPlaces}*/}
-          {/*  onOfferMouseEnter={onOfferMouseEnter}*/}
-          {/*  onOfferMouseLeave={onOfferMouseLeave}*/}
-          {/*/>*/}
+          {nearByPlaces &&
+          <NearPlacesList
+            offers={nearByPlaces}
+            onOfferMouseEnter={onOfferMouseEnter}
+            onOfferMouseLeave={onOfferMouseLeave}
+          />}
         </div>
       </main>
     </div>

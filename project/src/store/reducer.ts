@@ -14,6 +14,7 @@ const initialState: State = {
   email: '',
   detailedOffer: null,
   reviews: null,
+  nearByPlaces: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -52,6 +53,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.offerReviewsLoaded:
       return {...state,
         reviews: action.payload.reviews,
+      };
+    case ActionType.loadedNearbyOffers:
+      return {
+        ...state,
+        nearByPlaces: action.payload.nearByPlaces,
       };
     default:
       return state;

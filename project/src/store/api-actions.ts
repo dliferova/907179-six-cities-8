@@ -1,5 +1,5 @@
 import {ThunkActionResult} from '../types/action';
-import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter, offerDetailedLoaded, loadedOfferReviews} from './actions';
+import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter, offerDetailedLoaded, loadedOfferReviews, loadNerByPlaces} from './actions';
 import {saveToken, Token} from '../services/token';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {OfferFromServer, adaptToClient} from '../types/offer';
@@ -68,5 +68,18 @@ export const postCommentAction = ({commentText, rating}: Comment, offerId: strin
     catch {
       // eslint-disable-next-line no-console
       console.log('Не отправлено');
+    }
+  };
+
+export const loadeNearByPlaces = (offerId: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+      const offers = data.map((item) => adaptToClient(item));
+      dispatch(loadNerByPlaces(offers));
+    }
+    catch {
+    // eslint-disable-next-line no-console
+      console.log('Ошибка');
     }
   };

@@ -5,6 +5,7 @@ import {SortType, AuthorizationStatus} from '../const';
 export type State = {
   cityOffers: Offers,
   offers: Offers,
+  nearByPlaces: Offers,
   isDataLoaded: boolean,
   currentCity: string,
   currentSortType: SortType,

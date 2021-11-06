@@ -19,6 +19,7 @@ export enum ActionType {
   requireLogout = 'user/require-logout',
   loginChanged = 'user/login-added',
   redirectedToRoute = 'user/redirect',
+  loadedNearbyOffers = 'data/near-by-places-loaded',
 }
 
 export type CityChanged = {
@@ -88,6 +89,13 @@ export type PostNewComment = {
   }
 }
 
-export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute| OfferDetailedLoaded | OfferReviewsLoaded | PostNewComment;
+export type NearbyOffersLoaded = {
+  type: ActionType.loadedNearbyOffers;
+  payload: {
+    nearByPlaces: Offers,
+  }
+}
+
+export type Actions = CityChanged | OffersLoaded | SortTypeChanged | RequireAuthorization | RequireLogout | LoginChanged | RedirectedToRoute| OfferDetailedLoaded | OfferReviewsLoaded | PostNewComment | NearbyOffersLoaded;
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

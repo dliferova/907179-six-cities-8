@@ -8,7 +8,8 @@ import {
   RedirectedToRoute,
   RequireAuthorization,
   RequireLogout,
-  SortTypeChanged
+  SortTypeChanged,
+  NearbyOffersLoaded
 } from '../types/action';
 
 import {Offer, Offers} from '../types/offer';
@@ -75,3 +76,11 @@ export const loadedOfferReviews = (reviews: Reviews): OfferReviewsLoaded => ({
     reviews,
   },
 });
+
+export const loadNerByPlaces = (nearByPlaces: Offers): NearbyOffersLoaded => ({
+  type: ActionType.loadedNearbyOffers,
+  payload: {
+    nearByPlaces,
+  },
+});
+
