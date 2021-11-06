@@ -13,6 +13,7 @@ export enum APIRoute {
   FavoriteStatus = '/favorite/hotel_id/:status',
   Login = '/login',
   Logout = '/logout',
+  Reviews = '/comments'
 }
 
 export enum AuthorizationStatus {

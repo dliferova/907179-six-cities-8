@@ -1,4 +1,5 @@
 import {Offer, Offers} from './offer';
+import {Reviews} from './reviews';
 import {SortType, AuthorizationStatus} from '../const';
 
 export type State = {
@@ -9,5 +10,6 @@ export type State = {
   currentSortType: SortType,
   authorizationStatus: AuthorizationStatus,
   email: string,
-  detailedOffer: Offer | null
+  detailedOffer: Offer | null,
+  reviews: Reviews | null,
 };

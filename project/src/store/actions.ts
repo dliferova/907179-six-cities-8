@@ -2,16 +2,18 @@ import {
   ActionType,
   CityChanged,
   LoginChanged,
+  OfferDetailedLoaded,
+  OfferReviewsLoaded,
   OffersLoaded,
+  RedirectedToRoute,
   RequireAuthorization,
   RequireLogout,
-  SortTypeChanged,
-  RedirectedToRoute,
-  OfferDetailedLoaded
+  SortTypeChanged
 } from '../types/action';
 
 import {Offer, Offers} from '../types/offer';
-import {SortType, AuthorizationStatus, AppRoute} from '../const';
+import {Reviews} from '../types/reviews';
+import {AppRoute, AuthorizationStatus, SortType} from '../const';
 
 export const cityChanged = (activeCity: string): CityChanged  => ({
   type: ActionType.cityChanged,
@@ -64,5 +66,12 @@ export const offerDetailedLoaded = (offer: Offer): OfferDetailedLoaded => ({
   type: ActionType.offerDetailedLoaded,
   payload: {
     offer,
+  },
+});
+
+export const loadedOfferReviews = (reviews: Reviews): OfferReviewsLoaded => ({
+  type: ActionType.offerReviewsLoaded,
+  payload: {
+    reviews,
   },
 });

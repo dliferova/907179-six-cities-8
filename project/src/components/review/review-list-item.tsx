@@ -1,15 +1,21 @@
 import React from 'react';
-import {Review} from '../../types/offer';
+import {Review} from '../../types/reviews';
 
-function ReviewItem({id, reviewMessage, date, rating, author}: Review): JSX.Element {
+type ReviewProps = {
+  review: Review;
+}
+
+function ReviewItem({review}: ReviewProps): JSX.Element {
+  const date = new Date (review.date);
+
   return (
-    <li key={id} className="reviews__item">
+    <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={author.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
+          <img className="reviews__avatar user__avatar" src={review.author.avatarUrl} width="54" height="54" alt="Reviews avatar"/>
         </div>
         <span className="reviews__user-name">
-          {author.name}
+          {review.author.name}
         </span>
       </div>
       <div className="reviews__info">
@@ -20,9 +26,9 @@ function ReviewItem({id, reviewMessage, date, rating, author}: Review): JSX.Elem
           </div>
         </div>
         <p className="reviews__text">
-          {reviewMessage}
+          {review.reviewMessage}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime="2019-04-24">{date.toDateString()}</time>
       </div>
     </li>
   );

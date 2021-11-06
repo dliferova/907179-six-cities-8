@@ -9,7 +9,7 @@ type FavoriteCardItemProps = {
 
 function FavoriteCityPlaceCard(props: FavoriteCardItemProps): JSX.Element {
   const offer = props.offer;
-  const {previewImage, price, title, city, room, isFavorite} = offer;
+  const {previewImage, price, title, city, type, isFavorite} = offer;
 
   return (
     <li className="favorites__locations-items">
@@ -59,7 +59,7 @@ function FavoriteCityPlaceCard(props: FavoriteCardItemProps): JSX.Element {
             <h2 className="place-card__name">
               {title}
             </h2>
-            <p className="place-card__type">{room}</p>
+            <p className="place-card__type">{type}</p>
           </div>
         </article>
       </div>

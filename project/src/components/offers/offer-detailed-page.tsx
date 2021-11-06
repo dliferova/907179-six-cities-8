@@ -6,19 +6,30 @@ import Header from '../header/header';
 import {State} from '../../types/state';
 import {useParams} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
-import ReviewsBlock from '../review/reviews-block';
 import {ThunkAppDispatch} from '../../types/action';
-import {loadDetailedOffer} from '../../store/api-actions';
+import {loadDetailedOffer, loadOfferReview} from '../../store/api-actions';
+import ReviewList from '../review/review-list';
+import ReviewForm from '../review/review-form';
+import {AuthorizationStatus} from '../../const';
+// import ReviewForm from '../review/review-form';
+// import {AuthorizationStatus} from '../../const';
 
 const mapStateToProps = ({
   detailedOffer,
+  reviews,
+  authorizationStatus,
 }: State) => ({
   detailedOffer,
+  reviews,
+  authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onLoadDetailedOffer(offerId: string) {
     dispatch(loadDetailedOffer(offerId));
+  },
+  onOfferReviewsLoaded(offerId: string) {
+    dispatch(loadOfferReview(offerId));
   },
 });
 
@@ -26,7 +37,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function OfferDetailedPage({detailedOffer, onLoadDetailedOffer}: PropsFromRedux): JSX.Element {
+function OfferDetailedPage(
+  {
+    detailedOffer,
+    onLoadDetailedOffer,
+    onOfferReviewsLoaded,
+    reviews,
+    authorizationStatus,
+  }: PropsFromRedux): JSX.Element {
 
   // const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   //
@@ -46,7 +64,10 @@ function OfferDetailedPage({detailedOffer, onLoadDetailedOffer}: PropsFromRedux)
   const { id }  = useParams<{id: string}>();
   useEffect(() => {
     onLoadDetailedOffer(id);
-  }, [id, onLoadDetailedOffer]);
+    onOfferReviewsLoaded(id);
+  }, [id, onLoadDetailedOffer, onOfferReviewsLoaded]);
+  // eslint-disable-next-line no-console
+  console.log(detailedOffer);
 
   return (
     <div className="page">
@@ -91,7 +112,7 @@ function OfferDetailedPage({detailedOffer, onLoadDetailedOffer}: PropsFromRedux)
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {detailedOffer?.room}
+                  {detailedOffer?.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {detailedOffer?.bedrooms}
@@ -135,7 +156,10 @@ function OfferDetailedPage({detailedOffer, onLoadDetailedOffer}: PropsFromRedux)
                 </div>
               </div>
 
-              <ReviewsBlock />
+              <section className="property__reviews reviews">
+                {reviews && <ReviewList reviews={reviews}/>}
+                {authorizationStatus === AuthorizationStatus.Auth && detailedOffer?.id ? <ReviewForm offerId={detailedOffer.id}/> : null}
+              </section>
 
             </div>
           </div>

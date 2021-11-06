@@ -35,7 +35,7 @@ const getImageWrapper = (param: OfferCardType): string => {
 
 function OfferCardItem(props: CardItemProps): JSX.Element {
   const offer = props.offer;
-  const {id, previewImage, title, isPremium, room, price} = offer;
+  const {id, previewImage, title, isPremium, type, price} = offer;
 
   const renderPremiumTag = () => {
     if (isPremium) {
@@ -82,7 +82,7 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
             {title}
           </Link>
         </h2>
-        <p className="place-card__type">{room}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );

@@ -13,6 +13,7 @@ const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,
   email: '',
   detailedOffer: null,
+  reviews: null,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -47,6 +48,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.loginChanged:
       return {...state,
         email: action.payload.login,
+      };
+    case ActionType.offerReviewsLoaded:
+      return {...state,
+        reviews: action.payload.reviews,
       };
     default:
       return state;
