@@ -11,7 +11,7 @@ export const redirect: Middleware<unknown, Reducer> =
       (action) => {
 
         if (action.type === ActionType.redirectedToRoute) {
-          browserHistory.push(action.payload);
+          browserHistory.push(action.payload.url);
         }
 
         return next(action);

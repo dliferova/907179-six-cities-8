@@ -12,6 +12,9 @@ const initialState: State = {
   currentSortType: SortType.Popular,
   authorizationStatus: AuthorizationStatus.Unknown,
   email: '',
+  detailedOffer: null,
+  reviews: null,
+  nearByPlaces: [],
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -26,6 +29,10 @@ const reducer = (state: State = initialState, action: Actions): State => {
         offers: action.payload.offers,
         cityOffers: action.payload.offers.filter((offer) => offer.city.name === state.currentCity),
         isDataLoaded: true,
+      };
+    case ActionType.offerDetailedLoaded:
+      return {...state,
+        detailedOffer: action.payload.offer,
       };
     case ActionType.sortTypeChanged:
       return{...state,
@@ -42,6 +49,15 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.loginChanged:
       return {...state,
         email: action.payload.login,
+      };
+    case ActionType.offerReviewsLoaded:
+      return {...state,
+        reviews: action.payload.reviews,
+      };
+    case ActionType.loadedNearbyOffers:
+      return {
+        ...state,
+        nearByPlaces: action.payload.nearByPlaces,
       };
     default:
       return state;

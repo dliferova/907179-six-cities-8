@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import OfferCardItem from '../card-item/offer-card-item';
+import OfferCardItem from './offer-card-item';
 import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
 import Sort from '../sort/sort';

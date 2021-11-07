@@ -1,6 +1,6 @@
 import React from 'react';
 import {Offer, Offers} from '../../types/offer';
-import OfferCardItem from '../card-item/offer-card-item';
+import OfferCardItem from '../offers/offer-card-item';
 import {OfferCardType} from '../../const';
 
 type NearPlacesProps = {

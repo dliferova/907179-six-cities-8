@@ -1,8 +1,21 @@
+export const MAX_RATING_POINT = 5;
+export const PERCENT = 100;
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
   Favorites = '/favorites',
-  Room = '/offer'
+  Room = '/offer',
+  NotFound = '/404',
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Favorite = '/favorite',
+  FavoriteStatus = '/favorite/hotel_id/:status',
+  Login = '/login',
+  Logout = '/logout',
+  Reviews = '/comments'
 }
 
 export enum AuthorizationStatus {
@@ -78,11 +91,3 @@ export enum SortType {
   PriceDecrease = 'Price: high to low',
   TopRatedFirst = 'Top rated first'
 }
-
-export enum APIRoute {
-  Offers = '/hotels',
-  Favorite = '/favorite',
-  Login = '/login',
-  Logout = '/logout',
-}
-

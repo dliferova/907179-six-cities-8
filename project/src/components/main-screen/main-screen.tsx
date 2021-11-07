@@ -1,5 +1,5 @@
 import React, {Dispatch, useState} from 'react';
-import OfferCardList from '../card-list/offer-card-list';
+import OfferCardList from '../offers/offer-card-list';
 import Header from '../header/header';
 import CitiesNavigation from '../cities-navigation/city-navigation';
 import Map  from '../map/map';
