@@ -26,7 +26,7 @@ function ReviewForm({offerId, onCommentPost}: ConnectedComponentProps): JSX.Elem
   const [commentMessage, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
-  const isFormInvalid = Boolean(rating === undefined || commentMessage.length < 50);
+  const isFormInvalid = Boolean(rating === 0 || commentMessage.length < 50);
 
   const handleFormSubmit = (e: FormEvent): void => {
     e.preventDefault();

@@ -1,4 +1,3 @@
-// import ReviewsBlock from '../review/reviews-block';
 import NearPlacesList from '../near-places/near-places-list';
 import Map from '../map/map';
 import React, {useEffect, useState} from 'react';
@@ -8,13 +7,11 @@ import {useParams} from 'react-router-dom';
 import {connect, ConnectedProps} from 'react-redux';
 import {ThunkAppDispatch} from '../../types/action';
 import {Offer} from '../../types/offer';
-import {loadDetailedOffer, loadOfferReview, loadeNearByPlaces} from '../../store/api-actions';
+import {loadDetailedOffer, loadOfferReview, loadNearByPlaces} from '../../store/api-actions';
 import ReviewList from '../review/review-list';
 import ReviewForm from '../review/review-form';
 import {AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
-// import ReviewForm from '../review/review-form';
-// import {AuthorizationStatus} from '../../const';
 
 const mapStateToProps = ({
   detailedOffer,
@@ -36,7 +33,7 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
     dispatch(loadOfferReview(offerId));
   },
   onNearByPlacesLoad(offerId: string) {
-    dispatch(loadeNearByPlaces(offerId));
+    dispatch(loadNearByPlaces(offerId));
   },
 });
 
@@ -58,11 +55,7 @@ function OfferDetailedPage(
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  //
-  // const city = offers[0].city;
-  //
-  // const nearestPlaces = offers.slice(0, MAX_AMOUNT_NEAR_PLACE);
-  //
+
   const onOfferMouseEnter = (offerId: string) => {
     const currentPoint = nearByPlaces.find((offer) => offer.id === offerId);
     setSelectedOffer(currentPoint);
@@ -77,9 +70,8 @@ function OfferDetailedPage(
     onLoadDetailedOffer(id);
     onOfferReviewsLoad(id);
     onNearByPlacesLoad(id);
+    window.scroll(0, 0);
   }, [id, onLoadDetailedOffer, onOfferReviewsLoad, onNearByPlacesLoad]);
-  // eslint-disable-next-line no-console
-  console.log(detailedOffer);
 
   return (
     <div className="page">

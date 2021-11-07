@@ -1,9 +1,20 @@
 import {ThunkActionResult} from '../types/action';
-import {offersLoaded, requireAuthorization, loginChanged, redirectedToRouter, offerDetailedLoaded, loadedOfferReviews, loadNerByPlaces} from './actions';
+import {
+  loadedOfferReviews,
+  loadNerByPlaces,
+  loginChanged,
+  offerDetailedLoaded,
+  offersLoaded,
+  redirectedToRouter,
+  requireAuthorization
+} from './actions';
 import {saveToken, Token} from '../services/token';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
-import {OfferFromServer, adaptToClient} from '../types/offer';
-import {ReviewsFromServer, Comment, getAdaptedComments} from '../types/reviews';
+import {adaptToClient, OfferFromServer} from '../types/offer';
+import {Comment, getAdaptedComments, ReviewsFromServer} from '../types/reviews';
+import {toast} from 'react-toastify';
+
+const POST_ERROR_MESSAGE = 'Отзыв не удалось отправить. Проверьте подключение к интернету и повторите попытку.';
 
 export type AuthData = {
   login: string;
@@ -19,22 +30,22 @@ export const loadOffers = (): ThunkActionResult =>
 
 export const loadDetailedOffer = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<OfferFromServer>(`${APIRoute.Offers}/${id}`);
-    const adaptedOffer = adaptToClient(data);
-    // eslint-disable-next-line no-console
-    console.log(data, adaptedOffer);
-    dispatch(offerDetailedLoaded(adaptedOffer));
+    try{
+      const {data} = await api.get<OfferFromServer>(`${APIRoute.Offers}/${id}`);
+      const adaptedOffer = adaptToClient(data);
+      dispatch(offerDetailedLoaded(adaptedOffer));
+    }
+    catch{
+      dispatch(redirectedToRouter(AppRoute.NotFound));
+    }
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
     await api.get(APIRoute.Login)
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response);
         dispatch(requireAuthorization(AuthorizationStatus.Auth));
         dispatch(loginChanged(response.data.email));
-        // dispatch(loginChanged(response.data));
       });
   };
 
@@ -49,14 +60,8 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
 
 export const loadOfferReview = (offerId: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const {data} = await api.get<ReviewsFromServer>(`${APIRoute.Reviews}/${offerId}`);
-      dispatch(loadedOfferReviews(getAdaptedComments(data)));
-    }
-    catch {
-      // eslint-disable-next-line no-console
-      console.log('Не загружено');
-    }
+    const {data} = await api.get<ReviewsFromServer>(`${APIRoute.Reviews}/${offerId}`);
+    dispatch(loadedOfferReviews(getAdaptedComments(data)));
   };
 
 export const postCommentAction = ({commentText, rating}: Comment, offerId: string): ThunkActionResult =>
@@ -66,20 +71,13 @@ export const postCommentAction = ({commentText, rating}: Comment, offerId: strin
       dispatch(loadedOfferReviews(getAdaptedComments(data)));
     }
     catch {
-      // eslint-disable-next-line no-console
-      console.log('Не отправлено');
+      toast.info(POST_ERROR_MESSAGE);
     }
   };
 
-export const loadeNearByPlaces = (offerId: string): ThunkActionResult =>
+export const loadNearByPlaces = (offerId: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
-      const offers = data.map((item) => adaptToClient(item));
-      dispatch(loadNerByPlaces(offers));
-    }
-    catch {
-    // eslint-disable-next-line no-console
-      console.log('Ошибка');
-    }
+    const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+    const offers = data.map((item) => adaptToClient(item));
+    dispatch(loadNerByPlaces(offers));
   };
