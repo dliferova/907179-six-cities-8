@@ -62,7 +62,7 @@ export const loadOfferReview = (offerId: string): ThunkActionResult =>
 export const postCommentAction = ({commentText, rating}: Comment, offerId: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.post<ReviewsFromServer>(`${APIRoute.Reviews}/${offerId}`, {commentText, rating});
+      const {data} = await api.post<ReviewsFromServer>(`${APIRoute.Reviews}/${offerId}`, {comment: commentText, rating: rating});
       dispatch(loadedOfferReviews(getAdaptedComments(data)));
     }
     catch {

@@ -12,6 +12,7 @@ import {loadDetailedOffer, loadOfferReview, loadeNearByPlaces} from '../../store
 import ReviewList from '../review/review-list';
 import ReviewForm from '../review/review-form';
 import {AuthorizationStatus} from '../../const';
+import {countRating} from '../../utils';
 // import ReviewForm from '../review/review-form';
 // import {AuthorizationStatus} from '../../const';
 
@@ -116,7 +117,7 @@ function OfferDetailedPage(
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={ {width: `${(detailedOffer?.rating)}%`} }></span>
+                  <span style={ {width: `${countRating(detailedOffer?.rating)}%`} }></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{detailedOffer?.rating}</span>
@@ -126,7 +127,7 @@ function OfferDetailedPage(
                   {detailedOffer?.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {detailedOffer?.bedrooms}
+                  {detailedOffer?.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {detailedOffer?.maxAdults} adults
@@ -178,7 +179,8 @@ function OfferDetailedPage(
             {nearByPlaces && detailedOffer? (
               <Map
                 cityLocation={detailedOffer.location}
-                points={nearByPlaces.map((offer) => ({title: offer.title, location: offer.location}))}
+                points={nearByPlaces.slice(0, 3)
+                  .map((offer) => ({title: offer.title, location: offer.location}))}
                 selectedPoint={selectedOffer}
               />
             ) : null}

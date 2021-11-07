@@ -1,3 +1,6 @@
+export const MAX_RATING_POINT = 5;
+export const PERCENT = 100;
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
