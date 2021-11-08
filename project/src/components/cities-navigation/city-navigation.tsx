@@ -6,9 +6,10 @@ import {cityChanged} from '../../store/actions';
 import {Actions} from '../../types/action';
 import {State} from '../../types/state';
 import {cities} from '../../const';
+import {getCurrentCity} from '../../store/offers/selectors';
 
-const mapStateToProps = ({currentCity}: State) => ({
-  currentCity,
+const mapStateToProps = (state: State) => ({
+  currentCity: getCurrentCity(state),
 });
 
 type CityNavItemProps = {

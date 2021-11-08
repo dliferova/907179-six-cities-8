@@ -92,7 +92,7 @@ export type PostNewComment = {
 export type NearbyOffersLoaded = {
   type: ActionType.loadedNearbyOffers;
   payload: {
-    nearByPlaces: Offers,
+    nearbyOffers: Offers,
   }
 }
 

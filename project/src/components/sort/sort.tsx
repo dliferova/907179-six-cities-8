@@ -4,9 +4,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {sortTypeChanged} from '../../store/actions';
 import {State} from '../../types/state';
 import {Actions} from '../../types/action';
+import {getCurrentSortType} from '../../store/state/selector';
 
-const mapStateToProps = ({currentSortType}: State) => ({
-  currentSortType,
+const mapStateToProps = (state: State) => ({
+  currentSortType: getCurrentSortType(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

@@ -6,6 +6,7 @@ import Sort from '../sort/sort';
 import {SortType} from '../../const';
 import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
+import {getCurrentSortType} from '../../store/state/selector';
 
 const getSortedOffers = (currentSortType: string, offers: Offers) => {
   switch(currentSortType){
@@ -24,8 +25,8 @@ const getSortedOffers = (currentSortType: string, offers: Offers) => {
   }
 };
 
-const mapStateToProps = ({currentSortType}: State) => ({
-  currentSortType,
+const mapStateToProps = (state: State) => ({
+  currentSortType: getCurrentSortType(state),
 });
 
 const connector = connect(mapStateToProps);

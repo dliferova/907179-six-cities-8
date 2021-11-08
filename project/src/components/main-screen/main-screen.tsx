@@ -9,10 +9,11 @@ import {Actions} from '../../types/action';
 import {cityChanged, logoutRequired} from '../../store/actions';
 import {connect, ConnectedProps} from 'react-redux';
 import {cities} from '../../const';
+import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
-const mapStateToProps = ({cityOffers, currentCity}: State) => ({
-  offers: cityOffers,
-  currentCity,
+const mapStateToProps = (state: State) => ({
+  cityOffers: getCityOffers(state),
+  currentCity: getCurrentCity(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -27,14 +28,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {currentCity, offers} = props;
+  const {currentCity, cityOffers} = props;
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const city = Object.values(cities).find((item) =>  item.name === currentCity);
 
   const onOfferMouseEnter = (offerId: string) => {
-    const currentPoint = offers.find((offer) => offer.id === offerId);
+    const currentPoint = cityOffers.find((offer) => offer.id === offerId);
     setSelectedOffer(currentPoint);
   };
 
@@ -52,7 +53,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
         <div className="cities">
           <div className="cities__places-container container">
             <OfferCardList
-              offers={offers}
+              offers={cityOffers}
               currentCity={currentCity}
               onOfferMouseEnter={onOfferMouseEnter}
               onOfferMouseLeave={onOfferMouseLeave}
@@ -61,7 +62,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               <section className="cities__map map">
                 <Map
                   cityLocation={city ? city.location : cities.Paris.location}
-                  points={offers.map((offer) => ({title: offer.title, location: offer.location}))}
+                  points={cityOffers.map((offer) => ({title: offer.title, location: offer.location}))}
                   selectedPoint={selectedOffer}
                 />
               </section>

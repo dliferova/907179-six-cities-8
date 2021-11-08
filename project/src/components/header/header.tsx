@@ -4,9 +4,10 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {State} from '../../types/state';
 import UserLoggedViewBar from './user-logged-view';
 import UserNotLoggedViewBar from './user-not-logged-view';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
+const mapStateToProps = (state: State) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const connector = connect(mapStateToProps);

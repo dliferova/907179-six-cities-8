@@ -12,17 +12,15 @@ import ReviewList from '../review/review-list';
 import ReviewForm from '../review/review-form';
 import {AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
+import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
+import {getUserReviews} from '../../store/user/selector';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-const mapStateToProps = ({
-  detailedOffer,
-  reviews,
-  authorizationStatus,
-  nearByPlaces,
-}: State) => ({
-  detailedOffer,
-  reviews,
-  authorizationStatus,
-  nearByPlaces,
+const mapStateToProps = (state: State) => ({
+  detailedOffer: getDetailedOffer(state),
+  reviews: getUserReviews(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  nearByOffers: getNearbyOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -49,7 +47,7 @@ function OfferDetailedPage(
     reviews,
     authorizationStatus,
     onNearByPlacesLoad,
-    nearByPlaces,
+    nearByOffers,
   }: PropsFromRedux): JSX.Element {
 
 
@@ -57,7 +55,7 @@ function OfferDetailedPage(
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const onOfferMouseEnter = (offerId: string) => {
-    const currentPoint = nearByPlaces.find((offer) => offer.id === offerId);
+    const currentPoint = nearByOffers.find((offer) => offer.id === offerId);
     setSelectedOffer(currentPoint);
   };
 
@@ -168,10 +166,10 @@ function OfferDetailedPage(
             </div>
           </div>
           <section className="property__map map">
-            {nearByPlaces && detailedOffer? (
+            {nearByOffers && detailedOffer? (
               <Map
                 cityLocation={detailedOffer.location}
-                points={nearByPlaces.slice(0, 3)
+                points={nearByOffers.slice(0, 3)
                   .map((offer) => ({title: offer.title, location: offer.location}))}
                 selectedPoint={selectedOffer}
               />
@@ -179,9 +177,9 @@ function OfferDetailedPage(
           </section>
         </section>
         <div className="container">
-          {nearByPlaces &&
+          {nearByOffers &&
           <NearPlacesList
-            offers={nearByPlaces}
+            offers={nearByOffers}
             onOfferMouseEnter={onOfferMouseEnter}
             onOfferMouseLeave={onOfferMouseLeave}
           />}

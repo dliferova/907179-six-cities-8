@@ -6,9 +6,10 @@ import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
 import {Actions} from '../../types/action';
 import {cityChanged} from '../../store/actions';
+import {getOffers} from '../../store/offers/selectors';
 
-const mapStateToProps = ({offers}: State) => ({
-  offers,
+const mapStateToProps = (state: State) => ({
+  offers: getOffers(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({

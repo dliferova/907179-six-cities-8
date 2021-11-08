@@ -80,7 +80,7 @@ export const loadedOfferReviews = (reviews: Reviews): OfferReviewsLoaded => ({
 export const loadNerByPlaces = (nearByPlaces: Offers): NearbyOffersLoaded => ({
   type: ActionType.loadedNearbyOffers,
   payload: {
-    nearByPlaces,
+    nearbyOffers: nearByPlaces,
   },
 });
 

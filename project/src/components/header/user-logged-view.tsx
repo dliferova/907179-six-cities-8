@@ -4,9 +4,10 @@ import {ThunkAppDispatch} from '../../types/action';
 import {logoutRequired} from '../../store/actions';
 import {AppRoute} from '../../const';
 import {State} from '../../types/state';
+import {getUserLogin} from '../../store/user/selector';
 
-const mapStateToProps = ({email}: State) => ({
-  email,
+const mapStateToProps = (state: State) => ({
+  email: getUserLogin(state),
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
