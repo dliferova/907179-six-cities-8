@@ -1,25 +1,14 @@
 import {Link} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {ThunkAppDispatch} from '../../types/action';
+import {useSelector, useDispatch} from 'react-redux';
 import {logoutRequired} from '../../store/actions';
 import {AppRoute} from '../../const';
-import {State} from '../../types/state';
 import {getUserLogin} from '../../store/user/selector';
 
-const mapStateToProps = (state: State) => ({
-  email: getUserLogin(state),
-});
+function UserLoggedViewBar(): JSX.Element {
+  const email = useSelector(getUserLogin);
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onLogoutClicked() {
-    dispatch(logoutRequired());
-  },
-});
+  const dispatch = useDispatch();
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function UserLoggedViewBar({onLogoutClicked, email}: PropsFromRedux): JSX.Element {
   return (
     <>
       <li className="header__nav-item user">
@@ -35,7 +24,7 @@ function UserLoggedViewBar({onLogoutClicked, email}: PropsFromRedux): JSX.Elemen
           href="#"
           onClick={(evt) => {
             evt.preventDefault();
-            onLogoutClicked();
+            dispatch(logoutRequired());
           }}
         >
           <span className="header__signout">Sign out</span>
@@ -46,5 +35,4 @@ function UserLoggedViewBar({onLogoutClicked, email}: PropsFromRedux): JSX.Elemen
   );
 }
 
-export {UserLoggedViewBar};
-export default connector(UserLoggedViewBar);
+export default UserLoggedViewBar;

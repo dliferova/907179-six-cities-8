@@ -1,33 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dispatch} from 'redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {cityChanged} from '../../store/actions';
-import {State} from '../../types/state';
 import {cities} from '../../const';
 import {getCurrentCity} from '../../store/offers/selectors';
 
-const mapStateToProps = (state: State) => ({
-  currentCity: getCurrentCity(state),
-});
+function CitiesNavigation(): JSX.Element {
+  const currentCity = useSelector(getCurrentCity);
 
-type CityNavItemProps = {
-
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCityChange(city: string) {
-    dispatch(cityChanged(city));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & CityNavItemProps;
-
-function CitiesNavigation(props: ConnectedComponentProps): JSX.Element {
-  const {onCityChange, currentCity} = props;
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -44,7 +25,7 @@ function CitiesNavigation(props: ConnectedComponentProps): JSX.Element {
                     to="/"
                     onClick={(evt) => {
                       evt.preventDefault();
-                      onCityChange(item);
+                      dispatch(cityChanged(item));
                     }}
                   >
                     <span>{item}</span>
@@ -57,5 +38,4 @@ function CitiesNavigation(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {CitiesNavigation};
-export default connector(CitiesNavigation);
+export default CitiesNavigation;

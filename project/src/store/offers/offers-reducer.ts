@@ -1,5 +1,10 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {offersLoaded, offerDetailedLoaded, loadNearbyOffers, cityChanged} from '../../store/actions';
+import {
+  offersLoaded,
+  offerDetailedLoaded,
+  loadNearbyOffers,
+  cityChanged
+} from '../../store/actions';
 import {OffersData} from '../../types/state';
 import {cities} from '../../const';
 
@@ -8,7 +13,6 @@ const INITIAL_CITY = cities.Paris.name;
 const initialState: OffersData = {
   offers: [],
   detailedOffer: null,
-  cityOffers: [],
   nearbyOffers: [],
   isDataLoaded: false,
   currentCity: INITIAL_CITY,
@@ -18,7 +22,6 @@ export const offersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(offersLoaded, (state, action) => {
       state.offers = action.payload.offers;
-      state.cityOffers = action.payload.offers.filter((offer) => offer.city.name === state.currentCity);
       state.isDataLoaded = true;
     })
     .addCase(offerDetailedLoaded, (state, action) => {

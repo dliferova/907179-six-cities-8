@@ -75,7 +75,7 @@ export const postCommentAction = ({commentText, rating}: Comment, offerId: strin
     }
   };
 
-export const loadNearByPlaces = (offerId: string): ThunkActionResult =>
+export const loadNearbyPlaces = (offerId: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
     const offers = data.map((item) => adaptToClient(item));

@@ -1,20 +1,14 @@
+import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {State} from '../../types/state';
 import UserLoggedViewBar from './user-logged-view';
 import UserNotLoggedViewBar from './user-not-logged-view';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
-const mapStateToProps = (state: State) => ({
-  authorizationStatus: getAuthorizationStatus(state),
-});
+function Header(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Header({authorizationStatus}: PropsFromRedux): JSX.Element {
   return (
     <header className='header'>
       <div className='container'>
@@ -37,5 +31,4 @@ function Header({authorizationStatus}: PropsFromRedux): JSX.Element {
   );
 }
 
-export {Header};
-export default connector(Header);
+export default memo(Header);

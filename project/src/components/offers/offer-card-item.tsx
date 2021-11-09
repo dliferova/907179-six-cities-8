@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Offer} from '../../types/offer';
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
@@ -88,4 +88,4 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
   );
 }
 
-export default OfferCardItem;
+export default memo(OfferCardItem);

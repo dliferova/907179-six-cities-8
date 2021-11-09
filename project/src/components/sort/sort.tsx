@@ -1,26 +1,18 @@
 import {SortType} from '../../const';
-import {Dispatch} from 'redux';
 import React, {useState} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {sortTypeChanged} from '../../store/actions';
-import {State} from '../../types/state';
 import {getCurrentSortType} from '../../store/state/selector';
 
-const mapStateToProps = (state: State) => ({
-  currentSortType: getCurrentSortType(state),
-});
+function Sort(): JSX.Element {
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onSortTypeChange(sortType: SortType) {
+  const currentSortType = useSelector(getCurrentSortType);
+
+  const onSortTypeChange = (sortType: SortType) => {
     dispatch(sortTypeChanged(sortType));
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function Sort({currentSortType, onSortTypeChange}: PropsFromRedux): JSX.Element {
   const [dropdownOpened, setDropdownOpened] = useState<boolean>(false);
   const sortTypes = Object.values(SortType);
 
@@ -60,5 +52,4 @@ function Sort({currentSortType, onSortTypeChange}: PropsFromRedux): JSX.Element 
   );
 }
 
-export {Sort};
-export default connector(Sort);
+export default Sort;

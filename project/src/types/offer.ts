@@ -67,7 +67,7 @@ export type OfferFromServer = {
   'description': string;
   'location': Location;
   'placeType': string;
-  'id': string;
+  'id': number;
 }
 
 type HostInfoFromServer = {
@@ -109,6 +109,6 @@ export const adaptToClient = (data: OfferFromServer): Offer => ({
     longitude: data['location']['longitude'],
     zoom: data['location']['zoom'],
   },
-  id: data['id'],
+  id: String(data['id']),
 });
 

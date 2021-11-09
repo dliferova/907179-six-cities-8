@@ -1,34 +1,16 @@
 import React, {useState} from 'react';
-import {Dispatch} from 'redux';
 import OfferCardList from '../offers/offer-card-list';
 import Header from '../header/header';
 import CitiesNavigation from '../cities-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
-import {State} from '../../types/state';
-import {cityChanged, logoutRequired} from '../../store/actions';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {cities} from '../../const';
 import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
-const mapStateToProps = (state: State) => ({
-  cityOffers: getCityOffers(state),
-  currentCity: getCurrentCity(state),
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCityChange(city: string) {
-    dispatch(cityChanged(city));
-  },
-  onLogout: () => dispatch(logoutRequired()),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {currentCity, cityOffers} = props;
+function MainScreen(): JSX.Element {
+  const cityOffers = useSelector(getCityOffers);
+  const currentCity = useSelector(getCurrentCity);
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
@@ -74,5 +56,4 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {MainScreen};
-export default connector(MainScreen);
+export default MainScreen;

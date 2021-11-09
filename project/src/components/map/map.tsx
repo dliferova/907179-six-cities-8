@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {memo, useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
 import {Icon, Marker} from 'leaflet';
 import {Location} from '../../types/offer';
@@ -57,4 +57,4 @@ function Map({cityLocation, points, selectedPoint}: MapProps): JSX.Element {
   return <div style={{minHeight: '100%'}} ref={mapRef}/>;
 }
 
-export default Map;
+export default memo(Map);
