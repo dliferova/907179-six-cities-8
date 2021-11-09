@@ -1,10 +1,10 @@
-import React, {Dispatch} from 'react';
+import React from 'react';
+import {Dispatch} from 'redux';
 import '../favorites-screen/favorite-city-place-card';
 import FavoriteCityPlaceCard from './favorite-city-place-card';
 import Header from '../header/header';
 import {State} from '../../types/state';
 import {connect, ConnectedProps} from 'react-redux';
-import {Actions} from '../../types/action';
 import {cityChanged} from '../../store/actions';
 import {getOffers} from '../../store/offers/selectors';
 
@@ -12,7 +12,7 @@ const mapStateToProps = (state: State) => ({
   offers: getOffers(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCityChange(city: string) {
     dispatch(cityChanged(city));
   },

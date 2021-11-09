@@ -1,4 +1,5 @@
-import {Actions, ActionType} from '../../types/action';
+import {createReducer} from '@reduxjs/toolkit';
+import {offersLoaded, offerDetailedLoaded, loadNearbyOffers, cityChanged} from '../../store/actions';
 import {OffersData} from '../../types/state';
 import {cities} from '../../const';
 
@@ -13,31 +14,20 @@ const initialState: OffersData = {
   currentCity: INITIAL_CITY,
 };
 
-const offersReducer = (state = initialState, action: Actions): OffersData => {
-  switch (action.type) {
-    case ActionType.offersLoaded:
-      return {...state,
-        offers: action.payload.offers,
-        cityOffers: action.payload.offers.filter((offer) => offer.city.name === state.currentCity),
-        isDataLoaded: true,
-      };
-    case ActionType.offerDetailedLoaded:
-      return {...state,
-        detailedOffer: action.payload.offer,
-      };
-    case ActionType.loadedNearbyOffers:
-      return {
-        ...state,
-        nearbyOffers: action.payload.nearbyOffers,
-      };
-    case ActionType.cityChanged:
-      return {...state,
-        currentCity: action.payload.activeCity,
-        cityOffers: state.offers.filter((offer) => offer.city.name === action.payload.activeCity),
-      };
-    default:
-      return state;
-  }
-};
-
-export {offersReducer};
+export const offersReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(offersLoaded, (state, action) => {
+      state.offers = action.payload.offers;
+      state.cityOffers = action.payload.offers.filter((offer) => offer.city.name === state.currentCity);
+      state.isDataLoaded = true;
+    })
+    .addCase(offerDetailedLoaded, (state, action) => {
+      state.detailedOffer = action.payload.offer;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload.nearbyOffers;
+    })
+    .addCase(cityChanged, (state, action) => {
+      state.currentCity = action.payload.activeCity;
+    });
+});

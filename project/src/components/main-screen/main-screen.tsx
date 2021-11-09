@@ -1,11 +1,11 @@
-import React, {Dispatch, useState} from 'react';
+import React, {useState} from 'react';
+import {Dispatch} from 'redux';
 import OfferCardList from '../offers/offer-card-list';
 import Header from '../header/header';
 import CitiesNavigation from '../cities-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {State} from '../../types/state';
-import {Actions} from '../../types/action';
 import {cityChanged, logoutRequired} from '../../store/actions';
 import {connect, ConnectedProps} from 'react-redux';
 import {cities} from '../../const';
@@ -16,7 +16,7 @@ const mapStateToProps = (state: State) => ({
   currentCity: getCurrentCity(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onCityChange(city: string) {
     dispatch(cityChanged(city));
   },

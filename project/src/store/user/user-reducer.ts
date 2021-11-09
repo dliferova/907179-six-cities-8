@@ -1,24 +1,18 @@
 import {UserData} from '../../types/state';
-import {Actions, ActionType} from '../../types/action';
+import {createReducer} from '@reduxjs/toolkit';
+import {loginChanged, loadedOfferReviews} from '../../store/actions';
 
 const initialState: UserData = {
   email: '',
   reviews: null,
 };
 
-const userReducer = (state = initialState, action: Actions): UserData => {
-  switch (action.type) {
-    case ActionType.loginChanged:
-      return {...state,
-        email: action.payload.login,
-      };
-    case ActionType.offerReviewsLoaded:
-      return {...state,
-        reviews: action.payload.reviews,
-      };
-    default:
-      return state;
-  }
-};
-
-export {userReducer};
+export const userReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(loginChanged, (state, action) => {
+      state.email = action.payload.login;
+    })
+    .addCase(loadedOfferReviews, (state, action) => {
+      state.reviews = action.payload.reviews;
+    });
+});

@@ -1,86 +1,88 @@
-import {
-  ActionType,
-  CityChanged,
-  LoginChanged,
-  OfferDetailedLoaded,
-  OfferReviewsLoaded,
-  OffersLoaded,
-  RedirectedToRoute,
-  RequireAuthorization,
-  RequireLogout,
-  SortTypeChanged,
-  NearbyOffersLoaded
-} from '../types/action';
-
+import {createAction} from '@reduxjs/toolkit';
+import {ActionType} from '../types/action';
 import {Offer, Offers} from '../types/offer';
 import {Reviews} from '../types/reviews';
 import {AppRoute, AuthorizationStatus, SortType} from '../const';
 
-export const cityChanged = (activeCity: string): CityChanged  => ({
-  type: ActionType.cityChanged,
-  payload: {
-    activeCity,
-  },
-});
+export const cityChanged = createAction(
+  ActionType.cityChanged,
+  (currentCity: string) => ({
+    payload: {
+      activeCity: currentCity,
+    },
+  }),
+);
 
+export const offersLoaded = createAction(
+  ActionType.offersLoaded,
+  (offers: Offers) => ({
+    payload: {
+      offers,
+    },
+  }),
+);
 
-export const offersLoaded = (offers: Offers): OffersLoaded => ({
-  type: ActionType.offersLoaded,
-  payload: {
-    offers,
-  },
-});
+export const sortTypeChanged = createAction(
+  ActionType.sortTypeChanged,
+  (sortType: SortType) => ({
+    payload: {
+      currentSortType: sortType,
+    },
+  }),
+);
 
-export const sortTypeChanged = (sortType: SortType): SortTypeChanged => ({
-  type: ActionType.sortTypeChanged,
-  payload: {
-    currentSortType: sortType,
-  },
-});
+export const requireAuthorization = createAction(
+  ActionType.requireAuthorization,
+  (authStatus: AuthorizationStatus) => ({
+    payload: {
+      authStatus: authStatus,
+    },
+  }),
+);
 
-export const requireAuthorization = (authStatus: AuthorizationStatus): RequireAuthorization  => ({
-  type: ActionType.requireAuthorization,
-  payload: {
-    authStatus: authStatus,
-  },
-});
+export const logoutRequired = createAction(ActionType.requireLogout);
 
-export const logoutRequired = (): RequireLogout => ({
-  type: ActionType.requireLogout,
-});
+export const loginChanged = createAction(
+  ActionType.loginChanged,
+  (login: string) => ({
+    payload: {
+      login,
+    },
+  }),
+);
 
-export const loginChanged = (login: string): LoginChanged => ({
-  type: ActionType.loginChanged,
-  payload: {
-    login,
-  },
-});
+export const redirectedToRouter = createAction(
+  ActionType.redirectedToRoute,
+  (url: AppRoute) => ({
+    payload: {
+      url,
+    },
+  }),
+);
 
-export const redirectedToRouter = (url: AppRoute): RedirectedToRoute => ({
-  type: ActionType.redirectedToRoute,
-  payload: {
-    url,
-  },
-});
+export const offerDetailedLoaded = createAction(
+  ActionType.offerDetailedLoaded,
+  (offer: Offer) => ({
+    payload: {
+      offer,
+    },
+  }),
+);
 
-export const offerDetailedLoaded = (offer: Offer): OfferDetailedLoaded => ({
-  type: ActionType.offerDetailedLoaded,
-  payload: {
-    offer,
-  },
-});
+export const loadedOfferReviews = createAction(
+  ActionType.offerReviewsLoaded,
+  (reviews: Reviews) => ({
+    payload: {
+      reviews,
+    },
+  }),
+);
 
-export const loadedOfferReviews = (reviews: Reviews): OfferReviewsLoaded => ({
-  type: ActionType.offerReviewsLoaded,
-  payload: {
-    reviews,
-  },
-});
-
-export const loadNerByPlaces = (nearByPlaces: Offers): NearbyOffersLoaded => ({
-  type: ActionType.loadedNearbyOffers,
-  payload: {
-    nearbyOffers: nearByPlaces,
-  },
-});
-
+export const loadNearbyOffers = createAction(
+  ActionType.loadedNearbyOffers,
+  (nearbyPlaces: Offers) => ({
+    payload: {
+      nearbyOffers: nearbyPlaces,
+    },
+  }),
+);

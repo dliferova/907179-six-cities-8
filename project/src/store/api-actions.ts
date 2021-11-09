@@ -1,7 +1,7 @@
 import {ThunkActionResult} from '../types/action';
 import {
   loadedOfferReviews,
-  loadNerByPlaces,
+  loadNearbyOffers,
   loginChanged,
   offerDetailedLoaded,
   offersLoaded,
@@ -79,5 +79,5 @@ export const loadNearByPlaces = (offerId: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
     const offers = data.map((item) => adaptToClient(item));
-    dispatch(loadNerByPlaces(offers));
+    dispatch(loadNearbyOffers(offers));
   };
