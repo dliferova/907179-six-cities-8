@@ -11,6 +11,7 @@ type ReviewFormProps = {
   offerId: string,
 }
 
+//TODO
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   onCommentPost(review: Comment, offerId: string) {
     dispatch(postCommentAction(review, offerId));

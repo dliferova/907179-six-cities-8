@@ -4,8 +4,8 @@ import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
 import Sort from '../sort/sort';
 import {SortType} from '../../const';
-import {State} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {getCurrentSortType} from '../../store/state/selector';
 
 const getSortedOffers = (currentSortType: string, offers: Offers) => {
   switch(currentSortType){
@@ -24,12 +24,6 @@ const getSortedOffers = (currentSortType: string, offers: Offers) => {
   }
 };
 
-const mapStateToProps = ({currentSortType}: State) => ({
-  currentSortType,
-});
-
-const connector = connect(mapStateToProps);
-
 type CardListProps = {
   onOfferMouseEnter: (offerId: string) => void,
   onOfferMouseLeave: () => void,
@@ -37,16 +31,13 @@ type CardListProps = {
   offers: Offers,
 }
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type ConnectedComponentProps = PropsFromRedux & CardListProps;
-
-function OfferCardList(props: ConnectedComponentProps): JSX.Element {
+function OfferCardList(props: CardListProps): JSX.Element {
+  const currentSortType = useSelector(getCurrentSortType);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const sortedOffers = getSortedOffers(props.currentSortType, props.offers);
+  const sortedOffers = getSortedOffers(currentSortType, props.offers);
 
   const onOfferMouseEnter = (offer: Offer) => {
     props.onOfferMouseEnter(offer.id);
@@ -57,8 +48,6 @@ function OfferCardList(props: ConnectedComponentProps): JSX.Element {
     props.onOfferMouseLeave();
     setActiveCardId(null);
   };
-
-  //TODO убрать временный текст 33 строка, используется для устранения ошибки "неиспользуемая переменная activeCardId"
 
   return (
     <section className="cities__places places">
@@ -79,5 +68,4 @@ function OfferCardList(props: ConnectedComponentProps): JSX.Element {
   );
 }
 
-export {OfferCardList};
-export default connector(OfferCardList);
+export default OfferCardList;

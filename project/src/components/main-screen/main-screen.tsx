@@ -1,40 +1,23 @@
-import React, {Dispatch, useState} from 'react';
+import React, {useState} from 'react';
 import OfferCardList from '../offers/offer-card-list';
 import Header from '../header/header';
 import CitiesNavigation from '../cities-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
-import {State} from '../../types/state';
-import {Actions} from '../../types/action';
-import {cityChanged, logoutRequired} from '../../store/actions';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {cities} from '../../const';
+import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
-const mapStateToProps = ({cityOffers, currentCity}: State) => ({
-  offers: cityOffers,
-  currentCity,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  onCityChange(city: string) {
-    dispatch(cityChanged(city));
-  },
-  onLogout: () => dispatch(logoutRequired()),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-function MainScreen(props: PropsFromRedux): JSX.Element {
-  const {currentCity, offers} = props;
+function MainScreen(): JSX.Element {
+  const cityOffers = useSelector(getCityOffers);
+  const currentCity = useSelector(getCurrentCity);
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
   const city = Object.values(cities).find((item) =>  item.name === currentCity);
 
   const onOfferMouseEnter = (offerId: string) => {
-    const currentPoint = offers.find((offer) => offer.id === offerId);
+    const currentPoint = cityOffers.find((offer) => offer.id === offerId);
     setSelectedOffer(currentPoint);
   };
 
@@ -52,7 +35,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
         <div className="cities">
           <div className="cities__places-container container">
             <OfferCardList
-              offers={offers}
+              offers={cityOffers}
               currentCity={currentCity}
               onOfferMouseEnter={onOfferMouseEnter}
               onOfferMouseLeave={onOfferMouseLeave}
@@ -61,7 +44,7 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
               <section className="cities__map map">
                 <Map
                   cityLocation={city ? city.location : cities.Paris.location}
-                  points={offers.map((offer) => ({title: offer.title, location: offer.location}))}
+                  points={cityOffers.map((offer) => ({title: offer.title, location: offer.location}))}
                   selectedPoint={selectedOffer}
                 />
               </section>
@@ -73,5 +56,4 @@ function MainScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {MainScreen};
-export default connector(MainScreen);
+export default MainScreen;

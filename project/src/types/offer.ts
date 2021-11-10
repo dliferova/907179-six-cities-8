@@ -22,6 +22,11 @@ export type Offer = {
 
 export type Offers = Offer[];
 
+export type City = {
+  name: string,
+  location: Location,
+}
+
 export type Location = {
   latitude: number,
   longitude: number,
@@ -62,7 +67,7 @@ export type OfferFromServer = {
   'description': string;
   'location': Location;
   'placeType': string;
-  'id': string;
+  'id': number;
 }
 
 type HostInfoFromServer = {
@@ -104,6 +109,6 @@ export const adaptToClient = (data: OfferFromServer): Offer => ({
     longitude: data['location']['longitude'],
     zoom: data['location']['zoom'],
   },
-  id: data['id'],
+  id: String(data['id']),
 });
 

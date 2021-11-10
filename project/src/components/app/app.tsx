@@ -1,6 +1,6 @@
 import React from 'react';
 import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import AuthScreen from '../auth-screen/auth-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -9,25 +9,21 @@ import NotFoundScreen from '../not-fount-screen/not-found-screen';
 import OfferDetailedPage from '../offers/offer-detailed-page';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
-import {State} from '../../types/state';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getOffers, getOffersLoadStatus} from '../../store/offers/selectors';
 
 const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
   authorizationStatus === AuthorizationStatus.Unknown;
 
-const mapStateToProps = ({authorizationStatus, isDataLoaded, offers}: State) => ({
-  authorizationStatus,
-  isDataLoaded,
-  offers,
-});
+function App(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const isDataLoaded = useSelector(getOffersLoadStatus);
+  const offers = useSelector(getOffers);
 
-const connector = connect(mapStateToProps);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
-type PropsFromRedux = ConnectedProps<typeof connector>
-
-type ConnectedComponentProps = PropsFromRedux;
-
-function App({isDataLoaded, authorizationStatus}: ConnectedComponentProps): JSX.Element {
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />
@@ -50,6 +46,9 @@ function App({isDataLoaded, authorizationStatus}: ConnectedComponentProps): JSX.
           exact
           path={AppRoute.Favorites}
           render={() => <FavoritesScreen/>}
+          // favoriteOffers.length > 0
+          // ? () => <FavoritesScreen favoritesOffers ={favoriteOffers}/>
+          // : () => <FavoritesScreenEmpty/
         />
         <Route>
           <NotFoundScreen/>
@@ -59,5 +58,4 @@ function App({isDataLoaded, authorizationStatus}: ConnectedComponentProps): JSX.
   );
 }
 
-export {App};
-export default connector(App);
+export default App;
