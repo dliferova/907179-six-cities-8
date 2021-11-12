@@ -23,9 +23,14 @@ export type AuthData = {
 
 export const loadOffers = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<OfferFromServer[]>(APIRoute.Offers);
-    const offers = data.map((item) => adaptToClient(item));
-    dispatch(offersLoaded(offers));
+    try {
+      const {data} = await api.get<OfferFromServer[]>(APIRoute.Offers);
+      const offers = data.map((item) => adaptToClient(item));
+      dispatch(offersLoaded(offers));
+    }
+    catch {
+      dispatch(offersLoaded([]));
+    }
   };
 
 export const loadDetailedOffer = (id: string): ThunkActionResult =>
