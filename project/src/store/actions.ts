@@ -86,3 +86,22 @@ export const loadNearbyOffers = createAction(
     },
   }),
 );
+
+export const loadFavoritesOffers = createAction(
+  ActionType.loadFavoritesOffers,
+  (favoriteOffers: Offers) => ({
+    payload: {
+      favoriteOffers: favoriteOffers,
+    },
+  }),
+);
+
+export const offerUpdated = createAction(
+  ActionType.offerUpdated,
+  (updatedOffer: Offer) => ({
+    payload: {
+      updatedOffer: updatedOffer,
+    },
+  }),
+);
+

@@ -1,41 +1,34 @@
 import React, {memo} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Offer} from '../../types/offer';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
-import {OfferCardType} from '../../const';
+import {Link, useHistory} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, OfferCardType} from '../../const';
+import {getArticleClass, getImageWrapper} from './utils';
+import {postFavoriteAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 type CardItemProps = {
   type: OfferCardType;
   offer: Offer;
-  onMouseEnter: () => void,
-  onMouseLeave: () => void
+  onMouseEnter: (() => void) | null,
+  onMouseLeave: (() => void) | null
 }
 
-const getArticleClass = (param: OfferCardType): string => {
-  switch (param) {
-    case OfferCardType.Favorites:
-      return 'favorites__card place-card';
-    case OfferCardType.NearPlaces:
-      return 'near-places__card place-card';
-    default:
-      return 'cities__place-card place-card';
-  }
-};
-
-const getImageWrapper = (param: OfferCardType): string => {
-  switch (param) {
-    case OfferCardType.Favorites:
-      return 'favorites__image-wrapper place-card__image-wrapper';
-    case OfferCardType.NearPlaces:
-      return 'near-places__image-wrapper place-card__image-wrapper';
-    default:
-      return 'cities__image-wrapper place-card__image-wrapper';
-  }
-};
-
 function OfferCardItem(props: CardItemProps): JSX.Element {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const offer = props.offer;
-  const {id, previewImage, title, isPremium, type, price} = offer;
+  const {id, previewImage, title, isPremium, isFavorite, type, price} = offer;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const handleBookmark = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      history.push(AppRoute.SignIn);
+      return;
+    }
+
+    dispatch(postFavoriteAction(id, !isFavorite));
+  };
 
   const renderPremiumTag = () => {
     if (isPremium) {
@@ -49,8 +42,8 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
 
   return (
     <article className={getArticleClass(props.type)}
-      onMouseEnter={() => props.onMouseEnter()}
-      onMouseLeave={() => props.onMouseLeave()}
+      onMouseEnter={() => props.onMouseEnter && props.onMouseEnter()}
+      onMouseLeave={() => props.onMouseLeave && props.onMouseLeave()}
     >
       {renderPremiumTag()}
       <div className={getImageWrapper(props.type)}>
@@ -64,11 +57,14 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={(offer.isFavorite) ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            type="button"
+            onClick={handleBookmark}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"/>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{(offer.isFavorite) ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">

@@ -8,5 +8,4 @@ export const getCityOffers = (state: State): Offers => state[NameSpace.Offers].o
 export const getNearbyOffers = (state: State): Offers => state[NameSpace.Offers].nearbyOffers;
 export const getOffersLoadStatus = (state: State): boolean => state[NameSpace.Offers].isDataLoaded;
 export const getCurrentCity = (state: State): string  => state[NameSpace.Offers].currentCity;
-
-
+export const getFavoritesOffers = (state: State): Offers => state[NameSpace.Offers].favoriteOffers;

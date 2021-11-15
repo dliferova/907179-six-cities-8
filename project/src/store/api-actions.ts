@@ -6,7 +6,9 @@ import {
   offerDetailedLoaded,
   offersLoaded,
   redirectedToRouter,
-  requireAuthorization
+  requireAuthorization,
+  loadFavoritesOffers,
+  offerUpdated
 } from './actions';
 import {saveToken, Token} from '../services/token';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
@@ -85,4 +87,20 @@ export const loadNearbyPlaces = (offerId: string): ThunkActionResult =>
     const {data} = await api.get<OfferFromServer[]>(`${APIRoute.Offers}/${offerId}/nearby`);
     const offers = data.map((item) => adaptToClient(item));
     dispatch(loadNearbyOffers(offers));
+  };
+
+//Загрузка favorites с сервера
+export const loadFavorites = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<OfferFromServer[]>(APIRoute.Favorite);
+    const offers = data.map((item) => adaptToClient(item));
+    dispatch(loadFavoritesOffers(offers));
+  };
+
+//Добавление в избранное -> возвращает один конкретный добавленный в избранное оффер ->
+export const postFavoriteAction = (offerId: string, isFavorite: boolean): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.post<OfferFromServer>(`${APIRoute.Favorite}/${offerId}/${isFavorite ? 1 : 0}`);
+    const offer = adaptToClient(data);
+    dispatch(offerUpdated(offer));
   };

@@ -1,46 +1,64 @@
-import React from 'react';
-import {Dispatch} from 'redux';
-import '../favorites-screen/favorite-city-place-card';
-import FavoriteCityPlaceCard from './favorite-city-place-card';
+import React, {useEffect} from 'react';
 import Header from '../header/header';
-import {State} from '../../types/state';
-import {connect, ConnectedProps} from 'react-redux';
-import {cityChanged} from '../../store/actions';
-import {getOffers} from '../../store/offers/selectors';
+import {useDispatch, useSelector} from 'react-redux';
+import {getFavoritesOffers} from '../../store/offers/selectors';
+import {loadFavorites} from '../../store/api-actions';
+import FavoritesListItem from './favorites-list-item';
 
-const mapStateToProps = (state: State) => ({
-  offers: getOffers(state),
-});
+function FavoritesScreen(): JSX.Element {
+  const favoriteOffers = useSelector(getFavoritesOffers);
+  const hasFavoriteOffers = favoriteOffers.length !== 0;
+  const favoriteOffersCities = new Set <string>();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onCityChange(city: string) {
-    dispatch(cityChanged(city));
-  },
-});
-type PropsFromRedux = ConnectedProps<typeof connector>;
+  favoriteOffers.forEach((offer) => favoriteOffersCities.add(offer.city.name));
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
+  const dispatch= useDispatch();
 
-function FavoritesScreen(props: PropsFromRedux): JSX.Element {
-  const offers = props.offers;
+  useEffect(() => {
+    dispatch(loadFavorites());
+  }, [dispatch]);
+
 
   return (
     <div className="page">
+
       <Header/>
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved
-              listing
-            </h1>
-            <ul className="favorites__list">
-              {offers
-                .filter((offer) => offer.isFavorite)
-                .map((offer) => <FavoriteCityPlaceCard offer={offer} key={offer.id}/>)}
-            </ul>
-          </section>
-        </div>
-      </main>
+
+      { hasFavoriteOffers ? (
+        <main className="page__main page__main--favorites">
+          <div className="page__favorites-container container">
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {
+                  [...favoriteOffersCities]
+                    .map((city): JSX.Element => (
+                      <FavoritesListItem
+                        key={city}
+                        city={city}
+                        offers={favoriteOffers}
+                      />
+                    ))
+                }
+              </ul>
+            </section>
+          </div>
+        </main>
+      ) : (
+        <main className="page__main page__main--favorites page__main--favorites-empty">
+          <div className="page__favorites-container container">
+            <section className="favorites favorites--empty">
+              <h1 className="visually-hidden">Favorites (empty)</h1>
+              <div className="favorites__status-wrapper">
+                <b className="favorites__status">Nothing yet saved.</b>
+                <p className="favorites__status-description">Save properties to narrow down search or plan your future
+        trips.
+                </p>
+              </div>
+            </section>
+          </div>
+        </main>
+      )}
       <footer className="footer container">
         <a className="footer__logo-link"
           href="main.html"
@@ -57,5 +75,4 @@ function FavoritesScreen(props: PropsFromRedux): JSX.Element {
   );
 }
 
-export {FavoritesScreen};
-export default connector(FavoritesScreen);
+export default FavoritesScreen;
