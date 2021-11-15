@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Offer} from '../../types/offer';
 import {Link, useHistory} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, OfferCardType} from '../../const';
-import {getArticleClass, getImageWrapper} from './utils';
+import {getArticleClass, getImageWrapper, getImageHeight, getImageWidth} from './utils';
 import {postFavoriteAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
@@ -48,7 +48,7 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
       {renderPremiumTag()}
       <div className={getImageWrapper(props.type)}>
         <Link to={`${AppRoute.Room}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage} width={getImageWidth(props.type)} height={getImageHeight(props.type)} alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
