@@ -89,7 +89,6 @@ export const loadNearbyPlaces = (offerId: string): ThunkActionResult =>
     dispatch(loadNearbyOffers(offers));
   };
 
-//Загрузка favorites с сервера
 export const loadFavorites = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<OfferFromServer[]>(APIRoute.Favorite);
@@ -97,7 +96,6 @@ export const loadFavorites = (): ThunkActionResult =>
     dispatch(loadFavoritesOffers(offers));
   };
 
-//Добавление в избранное -> возвращает один конкретный добавленный в избранное оффер ->
 export const postFavoriteAction = (offerId: string, isFavorite: boolean): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.post<OfferFromServer>(`${APIRoute.Favorite}/${offerId}/${isFavorite ? 1 : 0}`);

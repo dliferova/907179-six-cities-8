@@ -2,13 +2,13 @@ import NearPlacesList from '../near-places/near-places-list';
 import Map from '../map/map';
 import React, {useEffect, useState} from 'react';
 import Header from '../header/header';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {Offer} from '../../types/offer';
-import {loadDetailedOffer, loadOfferReview, loadNearbyPlaces} from '../../store/api-actions';
+import {loadDetailedOffer, loadOfferReview, loadNearbyPlaces, postFavoriteAction} from '../../store/api-actions';
 import ReviewList from '../review/review-list';
 import ReviewForm from '../review/review-form';
-import {AuthorizationStatus} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
 import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
 import {getUserReviews} from '../../store/user/selector';
@@ -21,6 +21,7 @@ function OfferDetailedPage(): JSX.Element {
   const nearByOffers = useSelector(getNearbyOffers);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
@@ -34,7 +35,19 @@ function OfferDetailedPage(): JSX.Element {
     setSelectedOffer(undefined);
   };
 
-  const { id }  = useParams<{id: string}>();
+  const isFavorite = detailedOffer?.isFavorite;
+
+  const {id} = useParams<{id: string}>();
+
+  const handleBookmark = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      history.push(AppRoute.SignIn);
+      return;
+    }
+
+    dispatch(postFavoriteAction(id, !isFavorite));
+  };
+
 
   useEffect(() => {
     dispatch(loadDetailedOffer(id));
@@ -72,7 +85,10 @@ function OfferDetailedPage(): JSX.Element {
                     <h1 className="property__name">
                       {detailedOffer?.title}
                     </h1>
-                    <button className="property__bookmark-button button" type="button">
+                    <button className={(detailedOffer?.isFavorite) ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button'}
+                      type="button"
+                      onClick={handleBookmark}
+                    >
                       <svg className="property__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark"/>
                       </svg>

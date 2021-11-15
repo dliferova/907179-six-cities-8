@@ -26,8 +26,6 @@ function MainScreen(): JSX.Element {
     setSelectedOffer(undefined);
   };
 
-  //TODO добавлять page__main--index-empt
-
   return (
     <div className="page page--gray page--main">
       <Header/>

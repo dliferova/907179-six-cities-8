@@ -46,7 +46,8 @@ export const offersReducer = createReducer(initialState, (builder) => {
         state.detailedOffer = action.payload.updatedOffer;
       }
       state.nearbyOffers = updateOffers(state.nearbyOffers, action.payload.updatedOffer);
-      state.favoriteOffers = updateOffers(state.favoriteOffers, action.payload.updatedOffer);
+      state.favoriteOffers = updateOffers(state.favoriteOffers, action.payload.updatedOffer)
+        .filter((item) => item.isFavorite);
     });
 });
 
