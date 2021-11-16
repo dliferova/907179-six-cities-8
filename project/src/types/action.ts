@@ -19,6 +19,8 @@ export enum ActionType {
   loginChanged = 'user/login-added',
   redirectedToRoute = 'user/redirect',
   loadedNearbyOffers = 'data/near-by-places-loaded',
+  loadFavoritesOffers = 'data/load-favorite-offers',
+  offerUpdated = 'data/offer-updated'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

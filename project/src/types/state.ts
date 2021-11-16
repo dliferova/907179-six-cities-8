@@ -9,6 +9,7 @@ export type OffersData = {
   nearbyOffers: Offers,
   isDataLoaded: boolean,
   currentCity: string,
+  favoriteOffers: Offers,
 }
 
 export type UserProcessData = {
