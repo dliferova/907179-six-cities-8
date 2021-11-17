@@ -1,12 +1,12 @@
 import {memo, useEffect, useRef} from 'react';
 import useMap from '../../hooks/useMap';
-import {Icon, Marker} from 'leaflet';
+import L, {Icon, Marker} from 'leaflet';
 import {Location} from '../../types/offer';
 import 'leaflet/dist/leaflet.css';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapPoint = {
-  title: string,
+  id: string,
   location: Location,
 }
 
@@ -16,27 +16,31 @@ type MapProps = {
   selectedPoint: MapPoint | undefined;
 }
 
-//для отображения всех маркеров
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
   iconSize: [27, 39],
   iconAnchor: [20, 40],
 });
 
-//для отображения выбранного пользователем маркера
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
   iconSize: [27, 39],
   iconAnchor: [20, 40],
 });
 
+let markerGroup: L.LayerGroup;
+
 function Map({cityLocation, points, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityLocation);
 
-  //добавления маркеров на карту
   useEffect(() => {
     if (map) {
+      if (markerGroup) {
+        markerGroup.clearLayers();
+      }
+      markerGroup = L.layerGroup().addTo(map);
+
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.location.latitude,
@@ -45,16 +49,22 @@ function Map({cityLocation, points, selectedPoint}: MapProps): JSX.Element {
 
         marker
           .setIcon(
-            selectedPoint && point.title === selectedPoint.title
+            selectedPoint && point.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
-          .addTo(map);
+          .addTo(markerGroup);
       });
     }
   }, [map, points, selectedPoint]);
 
-  return <div style={{minHeight: '100%'}} ref={mapRef}/>;
+  useEffect(() => {
+    if (map) {
+      map.setView([cityLocation.latitude, cityLocation.longitude]);
+    }
+  }, [map, cityLocation]);
+
+  return <div style={{minHeight: '100%', maxWidth: '1144px', marginLeft: 'auto', marginRight: 'auto'}} ref={mapRef}/>;
 }
 
 export default memo(Map);

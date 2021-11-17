@@ -42,7 +42,7 @@ function MainScreen(): JSX.Element {
               <section className="cities__map map">
                 <Map
                   cityLocation={city ? city.location : cities.Paris.location}
-                  points={cityOffers.map((offer) => ({title: offer.title, location: offer.location}))}
+                  points={cityOffers.map((offer) => ({id: offer.id, location: offer.location}))}
                   selectedPoint={selectedOffer}
                 />
               </section>
