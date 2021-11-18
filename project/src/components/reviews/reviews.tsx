@@ -1,6 +1,6 @@
 import React from 'react';
 import {Review, Reviews} from '../../types/reviews';
-import ReviewItem from './review-list-item';
+import ReviewItem from './review-item';
 import dayjs from 'dayjs';
 
 type ReviewListProps = {
@@ -9,7 +9,7 @@ type ReviewListProps = {
 
 const MAX_REVIEW_COUNT = 10;
 
-function ReviewList({reviews}: ReviewListProps): JSX.Element {
+function Reviews({reviews}: ReviewListProps): JSX.Element {
   const userReviews = [...reviews]
     .sort((prev: Review, next: Review) => dayjs(next.date).diff(dayjs(prev.date)))
     .slice(0, MAX_REVIEW_COUNT);
@@ -32,4 +32,4 @@ function ReviewList({reviews}: ReviewListProps): JSX.Element {
   );
 }
 
-export default ReviewList;
+export default Reviews;

@@ -1,13 +1,13 @@
 import React from 'react';
 import {Offers} from '../../types/offer';
-import OfferCardItem from '../offers/offer-card-item';
+import OfferCardItem from '../offer-card/offer-card';
 import {OfferCardType} from '../../const';
 
 type NearPlacesProps = {
   offers: Offers,
 }
 
-function NearPlacesList(props: NearPlacesProps): JSX.Element {
+function NearPlaces(props: NearPlacesProps): JSX.Element {
   const nearestOffers = props.offers;
 
   return (
@@ -27,4 +27,4 @@ function NearPlacesList(props: NearPlacesProps): JSX.Element {
   );
 }
 
-export default NearPlacesList;
+export default NearPlaces;

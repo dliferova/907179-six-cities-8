@@ -6,7 +6,7 @@ import AuthScreen from '../auth-screen/auth-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import MainScreen from '../main-screen/main-screen';
 import NotFoundScreen from '../not-fount-screen/not-found-screen';
-import OfferDetailedPage from '../offers/offer-detailed-page';
+import OfferDetailedPage from '../offer-card/offer-detailed-page';
 import Spinner from '../spinner/spinner';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';

@@ -14,7 +14,7 @@ type CardItemProps = {
   onMouseLeave: (() => void) | null
 }
 
-function OfferCardItem(props: CardItemProps): JSX.Element {
+function OfferCard(props: CardItemProps): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const offer = props.offer;
@@ -83,4 +83,4 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
   );
 }
 
-export default memo(OfferCardItem);
+export default memo(OfferCard);

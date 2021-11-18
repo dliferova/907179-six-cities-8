@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import OfferCardList from '../offers/offer-card-list';
+import OfferCardList from '../offer-card/offer-card-list';
 import Header from '../header/header';
-import CitiesNavigation from '../cities-navigation/city-navigation';
+import CitiesNavigation from '../city-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {useSelector} from 'react-redux';
 import {cities} from '../../const';
-import OffersEmpty from '../offers/offers-empty';
+import OffersEmpty from '../offers-empty/offers-empty';
 import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
 function MainScreen(): JSX.Element {

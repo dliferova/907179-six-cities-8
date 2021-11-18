@@ -1,12 +1,12 @@
-import NearPlacesList from '../near-places/near-places-list';
+import NearPlaces from '../near-places/near-places';
 import Map from '../map/map';
 import React, {useEffect} from 'react';
 import Header from '../header/header';
 import {useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {loadDetailedOffer, loadOfferReview, loadNearbyPlaces, postFavoriteAction} from '../../store/api-actions';
-import ReviewList from '../review/review-list';
-import ReviewForm from '../review/review-form';
+import Reviews from '../reviews/reviews';
+import ReviewForm from '../reviews/review-form';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
 import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
@@ -141,7 +141,7 @@ function OfferDetailedPage(): JSX.Element {
                   </div>
 
                   <section className="property__reviews reviews">
-                    {reviews && <ReviewList reviews={reviews}/>}
+                    {reviews && <Reviews reviews={reviews}/>}
                     {authorizationStatus === AuthorizationStatus.Auth && detailedOffer?.id ? <ReviewForm offerId={detailedOffer.id}/> : null}
                   </section>
 
@@ -159,7 +159,7 @@ function OfferDetailedPage(): JSX.Element {
             </section>
             <div className="container">
               {nearByOffers &&
-              <NearPlacesList
+              <NearPlaces
                 offers={nearByOffers}
               />}
             </div>
