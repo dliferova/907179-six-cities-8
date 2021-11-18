@@ -1,19 +1,18 @@
-import React from 'react';
+import React, {FormEvent, useRef} from 'react';
 import Header from '../header/header';
-import {useRef, FormEvent} from 'react';
-import {useDispatch} from 'react-redux';
-import {loginAction, AuthData} from '../../store/api-actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {AuthData, loginAction} from '../../store/api-actions';
 import {loginChanged} from '../../store/actions';
-import {useHistory} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {useHistory, Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 function AuthScreen(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  const history = useHistory();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -32,6 +31,10 @@ function AuthScreen(): JSX.Element {
       history.push(AppRoute.Main);
     }
   };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    history.push(AppRoute.Main);
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -73,9 +76,9 @@ function AuthScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main}>
+                <span>Paris</span>
+              </Link>
             </div>
           </section>
         </div>

@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {logoutRequired} from '../../store/actions';
 import {AppRoute} from '../../const';
 import {getUserLogin} from '../../store/user/selector';
+import {logoutAction} from '../../store/api-actions';
 
 function UserLoggedViewBar(): JSX.Element {
   const email = useSelector(getUserLogin);
-
   const dispatch = useDispatch();
+  const handleClickSignOut = () => dispatch(logoutAction());
 
   return (
     <>
@@ -22,12 +22,9 @@ function UserLoggedViewBar(): JSX.Element {
 
         <a className="header__nav-link"
           href="#"
-          onClick={(evt) => {
-            evt.preventDefault();
-            dispatch(logoutRequired());
-          }}
+          onClick={handleClickSignOut}
         >
-          <span className="header__signout">Sign out</span>
+          <span className="header__signout" >Sign out</span>
         </a>
 
       </li>

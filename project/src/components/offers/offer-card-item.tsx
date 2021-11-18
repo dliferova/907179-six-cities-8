@@ -26,7 +26,6 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
       history.push(AppRoute.SignIn);
       return;
     }
-
     dispatch(postFavoriteAction(id, !isFavorite));
   };
 

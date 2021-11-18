@@ -8,9 +8,9 @@ import {
   redirectedToRouter,
   requireAuthorization,
   loadFavoritesOffers,
-  offerUpdated
+  offerUpdated, logoutRequired
 } from './actions';
-import {saveToken, Token} from '../services/token';
+import {dropToken, saveToken, Token} from '../services/token';
 import {APIRoute, AppRoute, AuthorizationStatus} from '../const';
 import {adaptToClient, OfferFromServer} from '../types/offer';
 import {Comment, getAdaptedComments, ReviewsFromServer} from '../types/reviews';
@@ -71,6 +71,13 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
     dispatch(loginChanged(email));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectedToRouter(AppRoute.Main));
+  };
+
+export const logoutAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(logoutRequired());
   };
 
 export const loadOfferReview = (offerId: string): ThunkActionResult =>
