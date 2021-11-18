@@ -17,6 +17,7 @@ import {Comment, getAdaptedComments, ReviewsFromServer} from '../types/reviews';
 import {toast} from 'react-toastify';
 
 const POST_ERROR_MESSAGE = 'Отзыв не удалось отправить. Проверьте подключение к интернету и повторите попытку.';
+const REQUIRED_AUTH = 'Не забудьте зарегистрироваться';
 
 export type AuthData = {
   login: string;
@@ -49,11 +50,17 @@ export const loadDetailedOffer = (id: string): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.get(APIRoute.Login)
-      .then((response) => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-        dispatch(loginChanged(response.data.email));
-      });
+    try {
+      await api.get(APIRoute.Login)
+        .then((response) => {
+          if (response.data) {
+            dispatch(loginChanged(response.data.email));
+            dispatch(requireAuthorization(AuthorizationStatus.Auth));
+          }
+        });
+    } catch {
+      toast.info(REQUIRED_AUTH);
+    }
   };
 
 
@@ -61,6 +68,7 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
   async (dispatch, _getState, api) => {
     const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
     saveToken(token);
+    dispatch(loginChanged(email));
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectedToRouter(AppRoute.Main));
   };

@@ -1,33 +1,29 @@
 import React, {FormEvent} from 'react';
 import {useState, ChangeEvent} from 'react';
-import {ThunkAppDispatch} from '../../types/action';
-import {connect, ConnectedProps} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Comment} from '../../types/reviews';
 import {postCommentAction} from '../../store/api-actions';
 
-const MIN_MESSAGE_SYMBOLS = 50;
+const MIN_MESSAGE_LENGTH = 50;
+const MAX_MESSAGE_LENGTH = 300;
 
 type ReviewFormProps = {
   offerId: string,
 }
 
-//TODO
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  onCommentPost(review: Comment, offerId: string) {
-    dispatch(postCommentAction(review, offerId));
-  },
-});
-
-const connector = connect(null, mapDispatchToProps);
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedComponentProps = PropsFromRedux & ReviewFormProps;
-
-function ReviewForm({offerId, onCommentPost}: ConnectedComponentProps): JSX.Element {
+function ReviewForm(props: ReviewFormProps): JSX.Element {
+  const offerId = props.offerId;
 
   const [commentMessage, setComment] = useState('');
   const [rating, setRating] = useState(0);
 
-  const isFormInvalid = Boolean(rating === 0 || commentMessage.length < 50);
+  const isFormInvalid = Boolean(rating === 0 || commentMessage.length < MIN_MESSAGE_LENGTH);
+
+  const dispatch = useDispatch();
+
+  const onCommentPost = (review: Comment, id: string) => {
+    dispatch(postCommentAction(review, id));
+  };
 
   const handleFormSubmit = (e: FormEvent): void => {
     e.preventDefault();
@@ -116,12 +112,14 @@ function ReviewForm({offerId, onCommentPost}: ConnectedComponentProps): JSX.Elem
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={commentMessage}
+        minLength={MIN_MESSAGE_LENGTH}
+        maxLength={MAX_MESSAGE_LENGTH}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setComment(event.target.value)}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and
-          describe your stay with at least <b className="reviews__text-amount">{MIN_MESSAGE_SYMBOLS} characters</b>.
+          describe your stay with at least <b className="reviews__text-amount">{MIN_MESSAGE_LENGTH} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isFormInvalid}>Submit</button>
       </div>
@@ -129,6 +127,4 @@ function ReviewForm({offerId, onCommentPost}: ConnectedComponentProps): JSX.Elem
   );
 }
 
-
-export {ReviewForm};
-export default connector(ReviewForm);
+export default ReviewForm;
