@@ -1,13 +1,12 @@
-import NearPlacesList from '../near-places/near-places-list';
+import NearPlaces from '../near-places/near-places';
 import Map from '../map/map';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Header from '../header/header';
 import {useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {Offer} from '../../types/offer';
 import {loadDetailedOffer, loadOfferReview, loadNearbyPlaces, postFavoriteAction} from '../../store/api-actions';
-import ReviewList from '../review/review-list';
-import ReviewForm from '../review/review-form';
+import ReviewsList from '../reviews/reviews-list';
+import ReviewForm from '../reviews/review-form';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
 import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
@@ -20,20 +19,14 @@ function OfferDetailedPage(): JSX.Element {
   const authorizationStatus =  useSelector(getAuthorizationStatus);
   const nearByOffers = useSelector(getNearbyOffers);
 
+  const mapPoints = [
+    ...(nearByOffers.slice(0, 3)
+      .map((offer) => ({id: offer.id, location: offer.location}))),
+    ...(detailedOffer ? [({id: detailedOffer.id, location: detailedOffer.location})] : []),
+  ];
+
   const dispatch = useDispatch();
   const history = useHistory();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-
-  const onOfferMouseEnter = (offerId: string) => {
-    const currentPoint = nearByOffers.find((offer) => offer.id === offerId);
-    setSelectedOffer(currentPoint);
-  };
-
-  const onOfferMouseLeave = () => {
-    setSelectedOffer(undefined);
-  };
 
   const isFavorite = detailedOffer?.isFavorite;
 
@@ -47,7 +40,6 @@ function OfferDetailedPage(): JSX.Element {
 
     dispatch(postFavoriteAction(id, !isFavorite));
   };
-
 
   useEffect(() => {
     dispatch(loadDetailedOffer(id));
@@ -149,7 +141,7 @@ function OfferDetailedPage(): JSX.Element {
                   </div>
 
                   <section className="property__reviews reviews">
-                    {reviews && <ReviewList reviews={reviews}/>}
+                    {reviews && <ReviewsList reviews={reviews}/>}
                     {authorizationStatus === AuthorizationStatus.Auth && detailedOffer?.id ? <ReviewForm offerId={detailedOffer.id}/> : null}
                   </section>
 
@@ -159,19 +151,16 @@ function OfferDetailedPage(): JSX.Element {
                 {nearByOffers && detailedOffer? (
                   <Map
                     cityLocation={detailedOffer.location}
-                    points={nearByOffers.slice(0, 3)
-                      .map((offer) => ({title: offer.title, location: offer.location}))}
-                    selectedPoint={selectedOffer}
+                    points={mapPoints}
+                    selectedPoint={detailedOffer}
                   />
                 ) : null}
               </section>
             </section>
             <div className="container">
               {nearByOffers &&
-              <NearPlacesList
+              <NearPlaces
                 offers={nearByOffers}
-                onOfferMouseEnter={onOfferMouseEnter}
-                onOfferMouseLeave={onOfferMouseLeave}
               />}
             </div>
           </main>

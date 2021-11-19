@@ -1,12 +1,14 @@
 import React from 'react';
 import {Review} from '../../types/reviews';
+import dayjs from 'dayjs';
 
 type ReviewProps = {
   review: Review;
 }
 
 function ReviewItem({review}: ReviewProps): JSX.Element {
-  const date = new Date (review.date);
+  const dateTime =  dayjs(review.date).format('YYYY-MM-DD');
+  const dateFormatted = dayjs(review.date).format('MMMM YYYY');
 
   return (
     <li className="reviews__item">
@@ -28,7 +30,7 @@ function ReviewItem({review}: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {review.reviewMessage}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date.toDateString()}</time>
+        <time className="reviews__time" dateTime={dateTime}>{dateFormatted}</time>
       </div>
     </li>
   );

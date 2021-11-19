@@ -1,24 +1,14 @@
 import React from 'react';
-import {Offer, Offers} from '../../types/offer';
-import OfferCardItem from '../offers/offer-card-item';
+import {Offers} from '../../types/offer';
+import OfferCardItem from '../offer-card/offer-card';
 import {OfferCardType} from '../../const';
 
 type NearPlacesProps = {
   offers: Offers,
-  onOfferMouseEnter: (offerId: string) => void;
-  onOfferMouseLeave: () => void;
 }
 
-function NearPlacesList(props: NearPlacesProps): JSX.Element {
+function NearPlaces(props: NearPlacesProps): JSX.Element {
   const nearestOffers = props.offers;
-
-  const onOfferMouseEnter = (offer: Offer) => {
-    props.onOfferMouseEnter(offer.id);
-  };
-
-  const onOfferMouseLeave = () => {
-    props.onOfferMouseLeave();
-  };
 
   return (
     <section className="near-places places">
@@ -29,12 +19,12 @@ function NearPlacesList(props: NearPlacesProps): JSX.Element {
             key={nearestOffer.id}
             type={OfferCardType.NearPlaces}
             offer={nearestOffer}
-            onMouseEnter={() => onOfferMouseEnter(nearestOffer)}
-            onMouseLeave={() => onOfferMouseLeave()}
+            onMouseEnter={null}
+            onMouseLeave={null}
           />))}
       </div>
     </section>
   );
 }
 
-export default NearPlacesList;
+export default NearPlaces;

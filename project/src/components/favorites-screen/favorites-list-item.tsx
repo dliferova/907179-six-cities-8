@@ -1,5 +1,5 @@
 import {Offers} from '../../types/offer';
-import OfferCardItem from '../offers/offer-card-item';
+import OfferCardItem from '../offer-card/offer-card';
 import {OfferCardType} from '../../const';
 import React from 'react';
 

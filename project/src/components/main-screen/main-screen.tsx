@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import OfferCardList from '../offers/offer-card-list';
+import OfferCardList from '../offer-card/offer-card-list';
 import Header from '../header/header';
-import CitiesNavigation from '../cities-navigation/city-navigation';
+import CitiesNavigation from '../city-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {useSelector} from 'react-redux';
 import {cities} from '../../const';
-import OffersEmpty from '../offers/offers-empty';
+import OffersEmpty from '../offers-empty/offers-empty';
 import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
 function MainScreen(): JSX.Element {
@@ -42,7 +42,7 @@ function MainScreen(): JSX.Element {
               <section className="cities__map map">
                 <Map
                   cityLocation={city ? city.location : cities.Paris.location}
-                  points={cityOffers.map((offer) => ({title: offer.title, location: offer.location}))}
+                  points={cityOffers.map((offer) => ({id: offer.id, location: offer.location}))}
                   selectedPoint={selectedOffer}
                 />
               </section>

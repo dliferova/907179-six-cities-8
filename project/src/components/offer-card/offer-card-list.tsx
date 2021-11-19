@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import OfferCardItem from './offer-card-item';
+import OfferCardItem from './offer-card';
 import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
 import Sort from '../sort/sort';
@@ -10,10 +10,10 @@ import {getCurrentSortType} from '../../store/state/selector';
 const getSortedOffers = (currentSortType: string, offers: Offers) => {
   switch(currentSortType){
     case SortType.PriceIncrease: {
-      return offers.slice().sort((offerA, offerB) => offerB.price - offerA.price);
+      return offers.slice().sort((offerA, offerB) => offerA.price - offerB.price);
     }
     case SortType.PriceDecrease: {
-      return offers.slice().sort((offerA, offerB) => offerA.price - offerB.price);
+      return offers.slice().sort((offerA, offerB) => offerB.price - offerA.price);
     }
     case SortType.TopRatedFirst: {
       return offers.slice().sort((offerA, offerB) => offerB.rating - offerA.rating);

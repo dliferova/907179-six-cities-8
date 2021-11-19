@@ -14,7 +14,7 @@ type CardItemProps = {
   onMouseLeave: (() => void) | null
 }
 
-function OfferCardItem(props: CardItemProps): JSX.Element {
+function OfferCard(props: CardItemProps): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const offer = props.offer;
@@ -26,7 +26,6 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
       history.push(AppRoute.SignIn);
       return;
     }
-
     dispatch(postFavoriteAction(id, !isFavorite));
   };
 
@@ -57,7 +56,7 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={(offer.isFavorite) ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+          <button className={`place-card__bookmark-button ${isFavorite && authorizationStatus === AuthorizationStatus.Auth ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
             onClick={handleBookmark}
           >
@@ -84,4 +83,4 @@ function OfferCardItem(props: CardItemProps): JSX.Element {
   );
 }
 
-export default memo(OfferCardItem);
+export default memo(OfferCard);
