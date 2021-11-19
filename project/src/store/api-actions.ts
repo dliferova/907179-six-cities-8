@@ -16,8 +16,12 @@ import {adaptToClient, OfferFromServer} from '../types/offer';
 import {Comment, getAdaptedComments, ReviewsFromServer} from '../types/reviews';
 import {toast} from 'react-toastify';
 
+const REQUIRED_AUTH = 'Не забудьте авторизоваться';
+const LOGIN_SUCCESS = 'Вы успешно авторизованы. Попробуйте все возможности 6 Cities.';
+const LOGIN_ERROR = 'Вы успешно авторизованы. Попробуйте все возможности 6 Cities.';
 const POST_ERROR_MESSAGE = 'Отзыв не удалось отправить. Проверьте подключение к интернету и повторите попытку.';
-const REQUIRED_AUTH = 'Не забудьте зарегистрироваться';
+const FAILED_POST_FAVORITE = 'Не удалось добавить предложение в избранное. Попробуйте еще раз.';
+const FAILED_GET_FAVORITE = 'Не удалось загрузить избранные предложения. Попробуйте еще раз.';
 
 export type AuthData = {
   login: string;
@@ -63,14 +67,18 @@ export const checkAuthAction = (): ThunkActionResult =>
     }
   };
 
-
 export const loginAction = ({login: email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(loginChanged(email));
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectedToRouter(AppRoute.Main));
+    try{
+      const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(loginChanged(email));
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectedToRouter(AppRoute.Main));
+      toast.success(LOGIN_SUCCESS);
+    } catch {
+      toast.error(LOGIN_ERROR);
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>
@@ -106,14 +114,22 @@ export const loadNearbyPlaces = (offerId: string): ThunkActionResult =>
 
 export const loadFavorites = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<OfferFromServer[]>(APIRoute.Favorite);
-    const offers = data.map((item) => adaptToClient(item));
-    dispatch(loadFavoritesOffers(offers));
+    try {
+      const {data} = await api.get<OfferFromServer[]>(APIRoute.Favorite);
+      const offers = data.map((item) => adaptToClient(item));
+      dispatch(loadFavoritesOffers(offers));
+    } catch {
+      toast.error(FAILED_GET_FAVORITE);
+    }
   };
 
 export const postFavoriteAction = (offerId: string, isFavorite: boolean): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.post<OfferFromServer>(`${APIRoute.Favorite}/${offerId}/${isFavorite ? 1 : 0}`);
-    const offer = adaptToClient(data);
-    dispatch(offerUpdated(offer));
+    try{
+      const {data} = await api.post<OfferFromServer>(`${APIRoute.Favorite}/${offerId}/${isFavorite ? 1 : 0}`);
+      const offer = adaptToClient(data);
+      dispatch(offerUpdated(offer));
+    } catch {
+      toast.error(FAILED_POST_FAVORITE);
+    }
   };

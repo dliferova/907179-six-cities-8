@@ -5,7 +5,7 @@ import Header from '../header/header';
 import {useParams, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {loadDetailedOffer, loadOfferReview, loadNearbyPlaces, postFavoriteAction} from '../../store/api-actions';
-import Reviews from '../reviews/reviews';
+import ReviewsList from '../reviews/reviews-list';
 import ReviewForm from '../reviews/review-form';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {countRating} from '../../utils';
@@ -141,7 +141,7 @@ function OfferDetailedPage(): JSX.Element {
                   </div>
 
                   <section className="property__reviews reviews">
-                    {reviews && <Reviews reviews={reviews}/>}
+                    {reviews && <ReviewsList reviews={reviews}/>}
                     {authorizationStatus === AuthorizationStatus.Auth && detailedOffer?.id ? <ReviewForm offerId={detailedOffer.id}/> : null}
                   </section>
 

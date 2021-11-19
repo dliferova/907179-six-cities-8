@@ -1,13 +1,20 @@
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
+import React from 'react';
 import {AppRoute} from '../../const';
 import {getUserLogin} from '../../store/user/selector';
 import {logoutAction} from '../../store/api-actions';
+import {redirectedToRouter} from '../../store/actions';
 
 function UserLoggedViewBar(): JSX.Element {
   const email = useSelector(getUserLogin);
   const dispatch = useDispatch();
-  const handleClickSignOut = () => dispatch(logoutAction());
+
+  const handleClickSignOut = (evt: React.MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    dispatch(redirectedToRouter(AppRoute.Main));
+    dispatch(logoutAction());
+  };
 
   return (
     <>
@@ -19,14 +26,12 @@ function UserLoggedViewBar(): JSX.Element {
         </Link>
       </li>
       <li className="header__nav-item">
-
         <a className="header__nav-link"
           href="#"
           onClick={handleClickSignOut}
         >
           <span className="header__signout" >Sign out</span>
         </a>
-
       </li>
     </>
   );

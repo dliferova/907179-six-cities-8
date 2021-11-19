@@ -9,7 +9,7 @@ type ReviewListProps = {
 
 const MAX_REVIEW_COUNT = 10;
 
-function Reviews({reviews}: ReviewListProps): JSX.Element {
+function ReviewsList({reviews}: ReviewListProps): JSX.Element {
   const userReviews = [...reviews]
     .sort((prev: Review, next: Review) => dayjs(next.date).diff(dayjs(prev.date)))
     .slice(0, MAX_REVIEW_COUNT);
@@ -32,4 +32,4 @@ function Reviews({reviews}: ReviewListProps): JSX.Element {
   );
 }
 
-export default Reviews;
+export default ReviewsList;

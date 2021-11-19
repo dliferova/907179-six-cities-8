@@ -56,7 +56,7 @@ function OfferCard(props: CardItemProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={(offer.isFavorite) ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+          <button className={`place-card__bookmark-button ${isFavorite && authorizationStatus === AuthorizationStatus.Auth ? 'place-card__bookmark-button--active' : ''} button`}
             type="button"
             onClick={handleBookmark}
           >
