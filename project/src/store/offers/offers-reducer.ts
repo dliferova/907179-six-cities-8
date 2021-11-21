@@ -8,10 +8,10 @@ import {
   offerUpdated
 } from '../actions';
 import {OffersData} from '../../types/state';
-import {cities} from '../../const';
+import {CityName} from '../../const';
 import {Offer, Offers} from '../../types/offer';
 
-const INITIAL_CITY = cities.Paris.name;
+const INITIAL_CITY = CityName.Paris;
 
 const initialState: OffersData = {
   offers: [],
