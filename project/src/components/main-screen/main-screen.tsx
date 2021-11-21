@@ -5,7 +5,6 @@ import CitiesNavigation from '../city-navigation/city-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {useSelector} from 'react-redux';
-import {cities} from '../../const';
 import OffersEmpty from '../offers-empty/offers-empty';
 import {getCityOffers, getCurrentCity} from '../../store/offers/selectors';
 
@@ -14,8 +13,6 @@ function MainScreen(): JSX.Element {
   const currentCity = useSelector(getCurrentCity);
 
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-
-  const city = Object.values(cities).find((item) =>  item.name === currentCity);
 
   const onOfferMouseEnter = (offerId: string) => {
     const currentPoint = cityOffers.find((offer) => offer.id === offerId);
@@ -37,16 +34,19 @@ function MainScreen(): JSX.Element {
           <div className="cities__places-container container">
             {cityOffers.length === 0
               ? <OffersEmpty currentCity={currentCity}/>
-              : <OfferCardList offers={cityOffers} currentCity={currentCity} onOfferMouseEnter={onOfferMouseEnter} onOfferMouseLeave={onOfferMouseLeave}/>}
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map
-                  cityLocation={city ? city.location : cities.Paris.location}
-                  points={cityOffers.map((offer) => ({id: offer.id, location: offer.location}))}
-                  selectedPoint={selectedOffer}
-                />
-              </section>
-            </div>
+              :
+              <>
+                <OfferCardList offers={cityOffers} currentCity={currentCity} onOfferMouseEnter={onOfferMouseEnter} onOfferMouseLeave={onOfferMouseLeave}/>
+                <div className="cities__right-section">
+                  <section className="cities__map map">
+                    <Map
+                      cityLocation={cityOffers[0].city.location}
+                      points={cityOffers.map((offer) => ({id: offer.id, location: offer.location}))}
+                      selectedPoint={selectedOffer}
+                    />
+                  </section>
+                </div>
+              </>}
           </div>
         </div>
       </main>

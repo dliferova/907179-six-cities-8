@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {cityChanged} from '../../store/actions';
-import {cities} from '../../const';
+import {CityName} from '../../const';
 import {getCurrentCity} from '../../store/offers/selectors';
 
 function CitiesNavigation(): JSX.Element {
@@ -16,8 +16,7 @@ function CitiesNavigation(): JSX.Element {
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {Object.values(cities)
-              .map((item) => item.name)
+            {Object.values(CityName)
               .map((item) => (
                 <li key={item} className="locations__item">
                   <Link
