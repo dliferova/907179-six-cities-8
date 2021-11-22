@@ -14,6 +14,7 @@ import {getUserReviews} from '../../store/user/selector';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 const MAX_NEARBY_POINTS_ON_MAP = 3;
+const MAX_PROMO_PHOTOS = 6;
 
 function OfferDetailedPage(): JSX.Element {
   const detailedOffer = useSelector(getDetailedOffer);
@@ -60,11 +61,13 @@ function OfferDetailedPage(): JSX.Element {
               <div className="property__gallery-container container">
                 <div className="property__gallery">
                   {
-                    detailedOffer?.images.map((image) => (
-                      <div className="property__image-wrapper" key={`${image}-${detailedOffer.id}`}>
-                        <img className="property__image" src={image} alt="Photography studio" />
-                      </div>
-                    ))
+                    detailedOffer?.images
+                      .slice(0, Math.min(detailedOffer.images.length, MAX_PROMO_PHOTOS))
+                      .map((image) => (
+                        <div className="property__image-wrapper" key={`${image}-${detailedOffer.id}`}>
+                          <img className="property__image" src={image} alt="Photography studio" />
+                        </div>
+                      ))
                   }
                 </div>
               </div>
