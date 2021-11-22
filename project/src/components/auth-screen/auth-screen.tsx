@@ -69,6 +69,7 @@ function AuthScreen(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  pattern={'([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*'}
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
