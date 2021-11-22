@@ -1,3 +1,5 @@
+import {OfferType} from '../const';
+
 export type Offer = {
   city: {
     name: string,
@@ -9,7 +11,7 @@ export type Offer = {
   isFavorite: boolean,
   isPremium: boolean,
   rating: number,
-  type: string,
+  type: OfferType,
   bedrooms: number,
   maxAdults: number,
   price: number,
@@ -51,7 +53,7 @@ export type OfferFromServer = {
   'is_favorite': boolean;
   'is_premium': boolean;
   'rating': number;
-  'type': string;
+  'type': OfferType;
   'bedrooms': number;
   'max_adults': number;
   'price': number;

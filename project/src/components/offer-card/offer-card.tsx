@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Offer} from '../../types/offer';
 import {Link, useHistory} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, OfferCardType} from '../../const';
-import {getArticleClass, getImageWrapper, getImageHeight, getImageWidth} from './utils';
+import {getArticleClass, getImageWrapper, getImageHeight, getImageWidth, getOfferType} from './utils';
 import {postFavoriteAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
@@ -77,7 +77,7 @@ function OfferCard(props: CardItemProps): JSX.Element {
             {title}
           </Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{getOfferType(type)}</p>
       </div>
     </article>
   );

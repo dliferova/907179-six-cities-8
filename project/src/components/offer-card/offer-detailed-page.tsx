@@ -12,6 +12,7 @@ import {countRating} from '../../utils';
 import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
 import {getUserReviews} from '../../store/user/selector';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getOfferType} from './utils';
 
 const MAX_NEARBY_POINTS_ON_MAP = 3;
 const MAX_PROMO_PHOTOS = 6;
@@ -101,7 +102,7 @@ function OfferDetailedPage(): JSX.Element {
                   </div>
                   <ul className="property__features">
                     <li className="property__feature property__feature--entire">
-                      {detailedOffer?.type}
+                      {getOfferType(detailedOffer?.type)}
                     </li>
                     <li className="property__feature property__feature--bedrooms">
                       {detailedOffer?.bedrooms} Bedrooms
