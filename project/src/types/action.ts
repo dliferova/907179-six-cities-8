@@ -9,7 +9,6 @@ import {State} from './state';
 export enum ActionType {
   CityChangedAction = 'app/city-changed',
   OffersLoadedAction = 'data/offers-loaded',
-  PostCommentAction = 'data/post-new-comment',
   OfferReviewsLoadedAction = 'data/offers-comments-loaded',
   OfferDetailedLoadedAction = 'data/detailed-offer-loaded',
   SortTypeChangedAction = 'sort/sort-type-changed',
