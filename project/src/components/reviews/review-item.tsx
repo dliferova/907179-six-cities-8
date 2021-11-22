@@ -37,4 +37,3 @@ function ReviewItem({review}: ReviewProps): JSX.Element {
 }
 
 export default ReviewItem;
-
