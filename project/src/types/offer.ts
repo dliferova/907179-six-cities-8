@@ -9,7 +9,7 @@ export type Offer = {
   isFavorite: boolean,
   isPremium: boolean,
   rating: number,
-  type: OfferType,
+  type: string,
   bedrooms: number,
   maxAdults: number,
   price: number,
@@ -40,13 +40,6 @@ export type HostInfo = {
   avatarUrl: string,
 };
 
-export enum OfferType {
-  apartment = 'Apartment',
-  room = 'Private room',
-  house = 'House',
-  hotel = 'Hotel',
-}
-
 export type OfferFromServer = {
   'city': {
     name: string,
@@ -58,7 +51,7 @@ export type OfferFromServer = {
   'is_favorite': boolean;
   'is_premium': boolean;
   'rating': number;
-  'type': OfferType;
+  'type': string;
   'bedrooms': number;
   'max_adults': number;
   'price': number;
