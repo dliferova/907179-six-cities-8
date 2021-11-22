@@ -13,6 +13,8 @@ import {getDetailedOffer, getNearbyOffers} from '../../store/offers/selectors';
 import {getUserReviews} from '../../store/user/selector';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
+const MAX_NEARBY_POINTS_ON_MAP = 3;
+
 function OfferDetailedPage(): JSX.Element {
   const detailedOffer = useSelector(getDetailedOffer);
   const reviews = useSelector(getUserReviews);
@@ -20,7 +22,7 @@ function OfferDetailedPage(): JSX.Element {
   const nearByOffers = useSelector(getNearbyOffers);
 
   const mapPoints = [
-    ...(nearByOffers.slice(0, 3)
+    ...(nearByOffers.slice(0, MAX_NEARBY_POINTS_ON_MAP)
       .map((offer) => ({id: offer.id, location: offer.location}))),
     ...(detailedOffer ? [({id: detailedOffer.id, location: detailedOffer.location})] : []),
   ];
