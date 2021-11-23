@@ -5,7 +5,7 @@ import {Reviews} from '../types/reviews';
 import {AppRoute, AuthorizationStatus, SortType} from '../const';
 
 export const cityChanged = createAction(
-  ActionType.cityChanged,
+  ActionType.CityChangedAction,
   (currentCity: string) => ({
     payload: {
       activeCity: currentCity,
@@ -14,7 +14,7 @@ export const cityChanged = createAction(
 );
 
 export const offersLoaded = createAction(
-  ActionType.offersLoaded,
+  ActionType.OffersLoadedAction,
   (offers: Offers) => ({
     payload: {
       offers,
@@ -23,7 +23,7 @@ export const offersLoaded = createAction(
 );
 
 export const sortTypeChanged = createAction(
-  ActionType.sortTypeChanged,
+  ActionType.SortTypeChangedAction,
   (sortType: SortType) => ({
     payload: {
       currentSortType: sortType,
@@ -32,7 +32,7 @@ export const sortTypeChanged = createAction(
 );
 
 export const requireAuthorization = createAction(
-  ActionType.requireAuthorization,
+  ActionType.RequireAuthorizationAction,
   (authStatus: AuthorizationStatus) => ({
     payload: {
       authStatus: authStatus,
@@ -40,10 +40,10 @@ export const requireAuthorization = createAction(
   }),
 );
 
-export const logoutRequired = createAction(ActionType.requireLogout);
+export const logoutRequired = createAction(ActionType.RequireLogoutAction);
 
 export const loginChanged = createAction(
-  ActionType.loginChanged,
+  ActionType.LoginChangedAction,
   (login: string) => ({
     payload: {
       login,
@@ -52,7 +52,7 @@ export const loginChanged = createAction(
 );
 
 export const redirectedToRouter = createAction(
-  ActionType.redirectedToRoute,
+  ActionType.RedirectedToRouteAction,
   (url: AppRoute) => ({
     payload: {
       url,
@@ -61,7 +61,7 @@ export const redirectedToRouter = createAction(
 );
 
 export const offerDetailedLoaded = createAction(
-  ActionType.offerDetailedLoaded,
+  ActionType.OfferDetailedLoadedAction,
   (offer: Offer) => ({
     payload: {
       offer,
@@ -70,7 +70,7 @@ export const offerDetailedLoaded = createAction(
 );
 
 export const loadedOfferReviews = createAction(
-  ActionType.offerReviewsLoaded,
+  ActionType.OfferReviewsLoadedAction,
   (reviews: Reviews) => ({
     payload: {
       reviews,
@@ -79,7 +79,7 @@ export const loadedOfferReviews = createAction(
 );
 
 export const loadNearbyOffers = createAction(
-  ActionType.loadedNearbyOffers,
+  ActionType.LoadedNearbyOffersAction,
   (nearbyPlaces: Offers) => ({
     payload: {
       nearbyOffers: nearbyPlaces,
@@ -88,7 +88,7 @@ export const loadNearbyOffers = createAction(
 );
 
 export const loadFavoritesOffers = createAction(
-  ActionType.loadFavoritesOffers,
+  ActionType.LoadFavoritesOffersAction,
   (favoriteOffers: Offers) => ({
     payload: {
       favoriteOffers: favoriteOffers,
@@ -97,7 +97,7 @@ export const loadFavoritesOffers = createAction(
 );
 
 export const offerUpdated = createAction(
-  ActionType.offerUpdated,
+  ActionType.OfferUpdatedAction,
   (updatedOffer: Offer) => ({
     payload: {
       updatedOffer: updatedOffer,

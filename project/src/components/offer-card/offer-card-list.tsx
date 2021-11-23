@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import OfferCardItem from './offer-card';
 import {Offer, Offers} from '../../types/offer';
 import {OfferCardType} from '../../const';
@@ -34,19 +34,14 @@ type CardListProps = {
 function OfferCardList(props: CardListProps): JSX.Element {
   const currentSortType = useSelector(getCurrentSortType);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
   const sortedOffers = getSortedOffers(currentSortType, props.offers);
 
   const onOfferMouseEnter = (offer: Offer) => {
     props.onOfferMouseEnter(offer.id);
-    setActiveCardId(offer.id);
   };
 
   const onOfferMouseLeave = () => {
     props.onOfferMouseLeave();
-    setActiveCardId(null);
   };
 
   return (

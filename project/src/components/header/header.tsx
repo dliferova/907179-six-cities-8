@@ -2,8 +2,8 @@ import {memo} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import UserLoggedViewBar from './user-logged-view';
-import UserNotLoggedViewBar from './user-not-logged-view';
+import UserLoggedViewBar from './user-logged-view-bar';
+import UserNotLoggedViewBar from './user-not-logged-view-bar';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 function Header(): JSX.Element {

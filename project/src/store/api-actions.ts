@@ -16,12 +16,14 @@ import {adaptToClient, OfferFromServer} from '../types/offer';
 import {Comment, getAdaptedComments, ReviewsFromServer} from '../types/reviews';
 import {toast} from 'react-toastify';
 
-const REQUIRED_AUTH = 'Не забудьте авторизоваться';
-const LOGIN_SUCCESS = 'Вы успешно авторизованы. Попробуйте все возможности 6 Cities.';
-const LOGIN_ERROR = 'Вы успешно авторизованы. Попробуйте все возможности 6 Cities.';
-const POST_ERROR_MESSAGE = 'Отзыв не удалось отправить. Проверьте подключение к интернету и повторите попытку.';
-const FAILED_POST_FAVORITE = 'Не удалось добавить предложение в избранное. Попробуйте еще раз.';
-const FAILED_GET_FAVORITE = 'Не удалось загрузить избранные предложения. Попробуйте еще раз.';
+const enum Messages {
+  REQUIRED_AUTH = 'Don\'t forget to log in!',
+  LOGIN_SUCCESS = 'You are successfully logged in.',
+  LOGIN_ERROR = 'Failed to log in. Check your internet connection and try again.',
+  POST_ERROR_MESSAGE = 'The review could not be sent. Check your internet connection and try again.',
+  FAILED_POST_FAVORITE = 'Couldn\'t add a suggestion to favorites. Please try again.',
+  FAILED_GET_FAVORITE = 'Failed to load favorite offers. Please try again.'
+}
 
 export type AuthData = {
   login: string;
@@ -63,7 +65,7 @@ export const checkAuthAction = (): ThunkActionResult =>
           }
         });
     } catch {
-      toast.info(REQUIRED_AUTH);
+      toast.info(Messages.REQUIRED_AUTH);
     }
   };
 
@@ -75,9 +77,9 @@ export const loginAction = ({login: email, password}: AuthData): ThunkActionResu
       dispatch(loginChanged(email));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectedToRouter(AppRoute.Main));
-      toast.success(LOGIN_SUCCESS);
+      toast.success(Messages.LOGIN_SUCCESS);
     } catch {
-      toast.error(LOGIN_ERROR);
+      toast.error(Messages.LOGIN_ERROR);
     }
   };
 
@@ -94,14 +96,17 @@ export const loadOfferReview = (offerId: string): ThunkActionResult =>
     dispatch(loadedOfferReviews(getAdaptedComments(data)));
   };
 
-export const postCommentAction = ({commentText, rating}: Comment, offerId: string): ThunkActionResult =>
+export const postCommentAction = ({commentText, rating}: Comment, offerId: string, callbacks: {onStart: () => void, onSuccess: () => void, onError: () => void}): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
+      callbacks.onStart();
       const {data} = await api.post<ReviewsFromServer>(`${APIRoute.Reviews}/${offerId}`, {comment: commentText, rating: rating});
       dispatch(loadedOfferReviews(getAdaptedComments(data)));
+      callbacks.onSuccess();
     }
     catch {
-      toast.info(POST_ERROR_MESSAGE);
+      callbacks.onError();
+      toast.info(Messages.POST_ERROR_MESSAGE);
     }
   };
 
@@ -119,7 +124,7 @@ export const loadFavorites = (): ThunkActionResult =>
       const offers = data.map((item) => adaptToClient(item));
       dispatch(loadFavoritesOffers(offers));
     } catch {
-      toast.error(FAILED_GET_FAVORITE);
+      toast.error(Messages.FAILED_GET_FAVORITE);
     }
   };
 
@@ -130,6 +135,6 @@ export const postFavoriteAction = (offerId: string, isFavorite: boolean): ThunkA
       const offer = adaptToClient(data);
       dispatch(offerUpdated(offer));
     } catch {
-      toast.error(FAILED_POST_FAVORITE);
+      toast.error(Messages.FAILED_POST_FAVORITE);
     }
   };

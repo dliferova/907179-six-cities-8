@@ -1,4 +1,4 @@
-import {OfferCardType} from '../../const';
+import {OfferCardType, OfferType} from '../../const';
 
 export const getArticleClass = (param: OfferCardType): string => {
   switch (param) {
@@ -41,5 +41,20 @@ export const getImageHeight = (param: OfferCardType): string => {
       return '200';
     default:
       return '200';
+  }
+};
+
+export const getOfferType = (offerType: OfferType): string => {
+  switch (offerType) {
+    case OfferType.Apartment:
+      return 'Apartment';
+    case OfferType.Room:
+      return 'Private room';
+    case OfferType.House:
+      return 'House';
+    case OfferType.Hotel:
+      return 'Hotel';
+    default:
+      throw new Error(`Not found offer type: ${offerType}`);
   }
 };

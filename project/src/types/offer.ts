@@ -1,3 +1,5 @@
+import {OfferType} from '../const';
+
 export type Offer = {
   city: {
     name: string,
@@ -39,13 +41,6 @@ export type HostInfo = {
   isPro: boolean
   avatarUrl: string,
 };
-
-export enum OfferType {
-  apartment = 'Apartment',
-  room = 'Private room',
-  house = 'House',
-  hotel = 'Hotel',
-}
 
 export type OfferFromServer = {
   'city': {

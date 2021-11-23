@@ -16,20 +16,33 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
 
   const [commentMessage, setComment] = useState('');
   const [rating, setRating] = useState(0);
+  const [isFormDisabled, setIsFormDisabled] = useState<boolean>(false);
 
   const isFormInvalid = Boolean(rating === 0 || commentMessage.length < MIN_MESSAGE_LENGTH);
 
   const dispatch = useDispatch();
 
   const onCommentPost = (review: Comment, id: string) => {
-    dispatch(postCommentAction(review, id));
+    dispatch(postCommentAction(review, id,
+      {
+        onStart: () => {
+          setIsFormDisabled(true);
+        },
+        onSuccess: () => {
+          setComment('');
+          setRating(0);
+          setIsFormDisabled(false);
+        },
+        onError: () => {
+          setIsFormDisabled(false);
+        },
+      },
+    ));
   };
 
   const handleFormSubmit = (e: FormEvent): void => {
     e.preventDefault();
     onCommentPost({commentText: commentMessage, rating: rating}, offerId);
-    setComment('');
-    setRating(0);
   };
 
   return (
@@ -43,6 +56,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={() => setRating(5) }
           checked={rating === 5}
+          disabled={isFormDisabled}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -56,6 +70,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={() => setRating(4) }
           checked={rating === 4}
+          disabled={isFormDisabled}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -70,6 +85,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={() => setRating(3) }
           checked={rating === 3}
+          disabled={isFormDisabled}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -84,6 +100,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={() => setRating(2) }
           checked={rating === 2}
+          disabled={isFormDisabled}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width="37" height="33">
@@ -98,6 +115,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           type="radio"
           onChange={() => setRating(1) }
           checked={rating === 1}
+          disabled={isFormDisabled}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label"
           title="terribly"
@@ -114,6 +132,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
         value={commentMessage}
         minLength={MIN_MESSAGE_LENGTH}
         maxLength={MAX_MESSAGE_LENGTH}
+        disabled={isFormDisabled}
         onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setComment(event.target.value)}
       />
       <div className="reviews__button-wrapper">
@@ -121,7 +140,7 @@ function ReviewForm(props: ReviewFormProps): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">{MIN_MESSAGE_LENGTH} characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isFormInvalid}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isFormInvalid || isFormDisabled}>Submit</button>
       </div>
     </form>
   );

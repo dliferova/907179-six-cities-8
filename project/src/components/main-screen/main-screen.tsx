@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import OfferCardList from '../offer-card/offer-card-list';
 import Header from '../header/header';
-import CitiesNavigation from '../city-navigation/city-navigation';
+import CitiesNavigation from '../cities-navigation/cities-navigation';
 import Map  from '../map/map';
 import {Offer} from '../../types/offer';
 import {useSelector} from 'react-redux';
